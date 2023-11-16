@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WritterGPT</title>
+    <!-- Include TailwindCSS from CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+    <div class="container mx-auto my-10 p-8 bg-white rounded shadow-xl">
+        <h1 class="text-3xl text-center text-gray-700 mb-8">Upload</h1>
+        <form id="uploadForm" enctype="multipart/form-data" class="max-w-lg mx-auto">
+            <div class="mb-6">
+                <label for="file" class="block text-gray-700 text-sm font-bold mb-2">File (pdf,txt,doc):</label>
+                <input type="file" id="single_file" name="single_file" accept=".pdf, .txt, .docx" class="block w-full px-3 py-2 text-gray-700 border rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+            </div>
+            <div class="mb-6">
+                <label for="website" class="block text-gray-700 text-sm font-bold mb-2">Website URL:</label>
+                <input type="url" id="website" name="website" placeholder="Website URL" class="block w-full px-3 py-2 text-gray-700 border rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+            </div>
+            <div class="mb-6">
+                <label for="text" class="block text-gray-700 text-sm font-bold mb-2">Text:</label>
+                <textarea id="text" name="text" placeholder="Text" class="block w-full px-3 py-2 text-gray-700 border rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"></textarea>
+            </div>
+            <div class="mb-6">
+                <label for="folder" class="block text-gray-700 text-sm font-bold mb-2">Folder:</label>
+                <input type="file" id="folder" name="folder" webkitdirectory directory multiple class="block w-full px-3 py-2 text-gray-700 border rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+            </div>
+            <button type="submit" id="submitUpload" class="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700">Upload</button>
+        </form>
+        <div id="uploadStatus" class="text-center mt-4"></div>
+        <h1 class="text-3xl text-center text-gray-700 mt-8">Uploaded Files:</h2>
+        <div id="uploadedFilesList" class="mt-4">
+            <ul id="filesList" class="list-disc list-inside"></ul>
+        </div>
+        <div class="text-center mt-8">
+            <button id="finishUploadBtn" class="mx-2 px-4 py-2 bg-green-500 text-white font-bold rounded hover:bg-green-700 focus:outline-none">Finish Upload</button>
+            <button id="deleteAllFilesBtn" class="mx-2 px-4 py-2 bg-red-500 text-white font-bold rounded hover:bg-red-700 focus:outline-none">Delete All Files</button>
+        </div>        
+    </div>
+    <script>
+        function updateUploadedFilesList(files) {
+            var filesList = $('#filesList');
+            filesList.empty();
+            files.forEach(function(file) {
+                filesList.append('<li>' + file + '</li>');
+            });
+        }
+        $(document).ready(function() {
+            $('#uploadForm').submit(function(e) {
+                e.preventDefault();
+                var formData = new FormData(this);
+                $('#uploadStatus').text('Uploading...');
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://localhost:8000/postdata/upload/',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        $('#uploadStatus').text('Upload successful!');
+                        fetchUploadedFiles();
+                    },
+                    error: function(error) {
+                        $('#uploadStatus').text('Error occurred!');
+                        console.error('Error:', error);
+                    }
+                });
+            });
+            $('#finishUploadBtn').click(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://localhost:8000/postdata/finish_upload/', 
+                    success: function(response) {
+                        alert('Indexing completed');
+                    },
+                    error: function(response) {
+                        console.log('Error:', response);
+                    }
+                });
+            });
+            $('#deleteAllFilesBtn').click(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    type: 'DELETE',
+                    url: 'http://localhost:8000/postdata/upload/', 
+                    success: function(response) {
+                        updateUploadedFilesList([]);
+                        alert('All files deleted');
+                    },
+                    error: function(response) {
+                        console.log('Error:', response);
+                    }
+                });
+            });
+            function fetchUploadedFiles() {
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://localhost:8000/postdata/upload/',
+                    success: function(response) {
+                        updateUploadedFilesList(response.uploaded_files);
+                    },
+                    error: function(error) {
+                        console.error('Error:', error);
+                    }
+                });
+            }
+            fetchUploadedFiles();
+        });
+    </script>
+</body>
+</html>
