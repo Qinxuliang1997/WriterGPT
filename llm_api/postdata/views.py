@@ -1,20 +1,22 @@
-from django.conf import settings
 from django.http import JsonResponse
-from django.views import View
-from rest_framework.decorators import api_view
+from rest_framework.views import APIView
 from rest_framework.response import Response
-
-from django.shortcuts import render,redirect
+from rest_framework import status
 import os
-from .utils.create_index import index_documents,save_all_index
 import shutil
 import threading
-import os
+from .utils.create_index import index_documents, save_all_index
 
+# Global list to track indexing threads
+threads = []   
+class UploadView(APIView):
+    def get(self, request, format=None):
+        # Return a list of uploaded files
+        original_data_dir = os.path.join(os.path.dirname(__file__), '..', 'original_data')
+        uploaded_files, _, _ = get_file_list(original_data_dir)
+        return JsonResponse({'uploaded_files': uploaded_files}, status=status.HTTP_200_OK)
 
-threads = []                         
-def upload(request):
-    if request.method == 'POST':
+    def post(self, request, format=None):
         single_file = request.FILES.get('single_file')
         website_url = request.POST.get('website')
         text_content = request.POST.get('text')
@@ -49,25 +51,34 @@ def upload(request):
             index_thread.join()
             # print("所有索引操作已完成。")            
         if folder_files:
-            
             for folder_file in folder_files:
                 save_file_from_folder(folder_file, os.path.join(original_data_dir, 'original_documents/'))
                 index_thread = threading.Thread(target=index_documents, args=(os.path.join(original_data_dir, 'original_documents', folder_file.name)))
                 index_thread.start()
                 threads.append(index_thread)
-         
-        uploaded_files, _, _ = get_file_list(original_data_dir)
-        return render(request, 'upload.html', {'uploaded_files': uploaded_files})
-    return render(request, 'upload.html', {'uploaded_files': None})
+        uploaded_files, _, _ = get_file_list(original_data_dir)        
+        return JsonResponse({'uploaded_files': uploaded_files}, status=status.HTTP_200_OK)
     
-def finish_upload(request):
-    indexed_data_dir = os.path.join(os.path.dirname(__file__), '..', 'indexed_documents')
-    # 等待所有线程完成
-    for thread in threads:
-        thread.join()
-    save_all_index(indexed_data_dir)
-    print("所有索引操作已完成。")   
-    return render(request, "success.html")
+    def delete(self, request, *args, **kwargs):
+        original_data_dir = os.path.join(os.path.dirname(__file__), '..', 'original_data')
+        indexed_documents_dir = os.path.join(os.path.dirname(__file__), '..', 'indexed_documents')
+        shutil.rmtree(original_data_dir)
+        os.makedirs(original_data_dir)
+        os.makedirs(os.path.join(original_data_dir, "original_documents"))
+        shutil.rmtree(indexed_documents_dir)
+        os.makedirs(indexed_documents_dir)
+        uploaded_files, _, _ = get_file_list(original_data_dir) 
+        return JsonResponse({'uploaded_files': uploaded_files}, status=status.HTTP_200_OK)
+
+class FinishUploadView(APIView):
+    def get(self, request, format=None):
+        indexed_data_dir = os.path.join(os.path.dirname(__file__), '..', 'indexed_documents')
+        # Wait for all threads to complete
+        for thread in threads:
+            thread.join()
+        
+        save_all_index(indexed_data_dir)
+        return Response({'status': 'Indexing completed'})
 
 def save_file_from_folder(file, output_dir):
     if not os.path.exists(output_dir):
@@ -83,16 +94,6 @@ def save_file_from_folder(file, output_dir):
         with open(file_path, 'wb') as f:
             for chunk in file.chunks():
                 f.write(chunk)
-
-def delete_all_files(request):
-    original_data_dir = os.path.join(os.path.dirname(__file__), '..', 'original_data')
-    indexed_documents_dir = os.path.join(os.path.dirname(__file__), '..', 'indexed_documents')
-    shutil.rmtree(original_data_dir)
-    os.makedirs(original_data_dir)
-    os.makedirs(os.path.join(original_data_dir, "original_documents"))
-    shutil.rmtree(indexed_documents_dir)
-    os.makedirs(indexed_documents_dir)
-    return redirect("upload")
 
 def get_file_list(folder_path):
     overall_list = []
