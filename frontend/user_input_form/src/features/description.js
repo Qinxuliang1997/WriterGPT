@@ -11,7 +11,7 @@ export const articleSlice = createSlice({
       view: "",
       nextClick: false,
       title: "", 
-      outline: "",
+      outline: [],
     },
   },
   reducers: {

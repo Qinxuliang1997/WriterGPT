@@ -20,7 +20,7 @@ main {
 
 .Container {
   min-width: 1000px;
-  height: 640px;
+  height: 700px;
   background-color: hsl(0, 0%, 100%);
   margin: auto;
   padding: 16px 15px 15px 15px;
@@ -37,10 +37,37 @@ main {
   padding-top: 10px;
 }
 
+.navigation {
+  width: 100%;
+  position: absolute;
+  bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+.navigation button {
+  padding: 15px 25px;
+  font-weight: 700;
+  font-size: 16px;
+}
+.navigation .btn1 {
+  background-color: transparent;
+  border: none;
+  color: hsl(231, 11%, 63%);
+}
+.navigation .btn2 {
+  background-color: #174a89;
+  border: none;
+  color: white;
+  border-radius: 10px;
+}
+
+.btnRight {
+  justify-content: right !important;
+}
+
 .Steps {
   position: absolute;
   top: 10px;
-  left: 0;
   width: 50%;
   height: 10%;
   left: 25%;
@@ -93,7 +120,7 @@ h2 {
 .info .form .fields {
   margin-top: 25px;
 }
-.info .form .fields input {
+.info .form .fields input, .info .form .fields select {
   width: 100%;
   font-size: 16px;
   padding: 15px;
@@ -104,16 +131,34 @@ h2 {
   color: hsl(213, 96%, 18%);
   font-weight: 500;
 }
-.info .form .fields input:focus {
+.info .form .fields input:focus, .info .form .fields select:focus {
   border-color: hsl(243, 100%, 62%);
 }
-.info .form .fields input::placeholder {
+.info .form .fields input::placeholder, .info .form .fields select::placeholder {
   color: hsl(231, 11%, 63%);
 }
 .info .form .fields label {
   color: hsl(213, 96%, 18%);
 }
-.info .form .fields select {
+
+h2 {
+  font-size: 32px;
+  margin: 10px 0;
+  color: hsl(213, 96%, 18%);
+}
+
+.info outlines-container {
+  max-height: 500px; /* Adjust this value to suit your design */
+  overflow-y: auto; /* Adds a vertical scrollbar when needed */
+}
+.info .outline-item {
+  margin-top: 25px;
+  position: relative;
+}
+.info .outline-item:hover .add-btn, .info .outline-item:hover .delete-btn {
+  display: block;
+}
+.info .outline-item input {
   width: 100%;
   font-size: 16px;
   padding: 15px;
@@ -124,8 +169,37 @@ h2 {
   color: hsl(213, 96%, 18%);
   font-weight: 500;
 }
-.info .form .fields select:focus {
+.info .outline-item input:focus {
   border-color: hsl(243, 100%, 62%);
+}
+.info .outline-item input::placeholder {
+  color: hsl(231, 11%, 63%);
+}
+.info .outline-item .add-btn,
+.info .outline-item .delete-btn {
+  display: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: black;
+  border: 1px solid black;
+  cursor: pointer;
+  border-radius: 100%;
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+  text-align: center;
+  background-color: white;
+}
+.info .outline-item .add-btn:focus,
+.info .outline-item .delete-btn:focus {
+  outline: none;
+}
+.info .outline-item .add-btn {
+  right: 30px;
+}
+.info .outline-item .delete-btn {
+  right: 0;
 }
 
 /*# sourceMappingURL=style.css.map */

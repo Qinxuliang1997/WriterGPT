@@ -22,7 +22,7 @@ main {
 }
 .Container {
   min-width: 1000px;
-  height: 640px;
+  height: 700px;
   background-color: hsl(0, 0%, 100%);
   margin: auto;
   padding: 16px 15px 15px 15px;
@@ -37,11 +37,38 @@ main {
   position: relative;
   padding-top: 10px;
 }
+//////////Navigation/////
+.navigation {
+  width: 100%;
+  position: absolute;
+  bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  
+  button {
+    padding: 15px 25px;
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .btn1 {
+    background-color: transparent;
+    border: none;
+    color: $gray;
+  }
+  .btn2 {
+    background-color: #174a89;
+    border: none;
+    color: white;
+    border-radius: 10px;
+  }
+}
+.btnRight{
+  justify-content: right !important;
+}
 //////////// Steps section
 .Steps {
   position: absolute;
   top: 10px;
-  left:0;
   width: 50%;
   height: 10%;
   left: 25%;
@@ -93,7 +120,7 @@ h2 {
     margin-top: 30px;
     .fields {
       margin-top: 25px;
-      input {
+      input,select {
         width: 100%;
         font-size: 16px;
         padding: 15px;
@@ -113,21 +140,73 @@ h2 {
       label {
         color: $Darkblue;
       }
-      select {
-        width: 100%;
-        font-size: 16px;
-        padding: 15px;
-        border-radius: 8px;
-        border: hsl(229, 24%, 87%) 1px solid;   
-        margin-top: 10px;
-        outline: none;
-        color: $Darkblue;
-        font-weight: 500;   
-        &:focus {
-          border-color: $blue;
-        }  
-      }
     }
   }
 }
+//////////// Outline
+h2 {
+  font-size: 32px;
+  margin: 10px 0;
+  color: $Darkblue;
+}
+.info{
+  outlines-container{
+    max-height: 500px; /* Adjust this value to suit your design */
+    overflow-y: auto; /* Adds a vertical scrollbar when needed */
+  }
+  .outline-item{
+    margin-top: 25px;
+    position: relative; // To position the buttons absolutely within this container
+    &:hover .add-btn,
+    &:hover .delete-btn {
+      display: block; // Only show buttons on hover
+    }    
+    input{
+      width: 100%;
+      font-size: 16px;
+      padding: 15px;
+      border-radius: 8px;
+      border: hsl(229, 24%, 87%) 1px solid;
+      margin-top: 10px;
+      outline: none;
+      color: $Darkblue;
+      font-weight: 500;
+      &:focus {
+        border-color: $blue;
+      }
+      &::placeholder {
+        color: $gray;
+      }
+    }
+    .add-btn,
+    .delete-btn {
+      display: none; // Hide buttons by default
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: black;
+      border: 1px solid black;
+      cursor: pointer;
+      border-radius: 100%;
+      width: 25px;
+      height: 25px;
+      line-height: 25px;
+      text-align: center;
+      background-color: white;
+      &:focus {
+        outline: none;
+      }
+    }
+    // 添加按钮样式
+    .add-btn {
+      right: 30px; 
+      // padding: 0 10px; 
+    }
 
+    // 删除按钮样式
+    .delete-btn {
+      right: 0; 
+      // padding: 0 10px; 
+    }
+  }
+}
