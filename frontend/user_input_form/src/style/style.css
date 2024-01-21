@@ -7,11 +7,11 @@
 }
 
 body {
-  background-color: #eef5ff;
+  background-color: #f2f7ff;
 }
 
 main {
-  background-color: #e0f7ff;
+  background-color: #f2fcff;
   width: 100%;
   height: 100vh;
   display: flex;
@@ -141,6 +141,52 @@ h2 {
   color: hsl(213, 96%, 18%);
 }
 
+.info .uploadForm {
+  margin-top: 25px;
+}
+.info .uploadForm button {
+  margin-top: 10px;
+  width: 100%;
+  height: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+.info .uploadForm .fields {
+  margin-top: 25px;
+}
+.info .uploadForm .fields label {
+  color: hsl(213, 96%, 18%);
+}
+.info .uploadForm .fields input, .info .uploadForm .fields textarea {
+  width: 100%;
+  font-size: 16px;
+  padding: 15px;
+  border-radius: 8px;
+  border: hsl(229, 24%, 87%) 1px solid;
+  margin-top: 10px;
+  outline: none;
+  color: hsl(213, 96%, 18%);
+  font-weight: 500;
+}
+.info .uploadForm .fields input:focus, .info .uploadForm .fields textarea:focus {
+  border-color: hsl(243, 100%, 62%);
+}
+.info .uploadForm .fields input::placeholder, .info .uploadForm .fields textarea::placeholder {
+  color: hsl(231, 11%, 63%);
+}
+.info h3 {
+  margin-top: 20px;
+}
+.info button {
+  margin-top: 10px;
+  width: 100%;
+  height: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
 h2 {
   font-size: 32px;
   margin: 10px 0;
@@ -200,6 +246,37 @@ h2 {
 }
 .info .outline-item .delete-btn {
   right: 0;
+}
+
+.article-writer .container {
+  padding: 20px;
+  margin: auto;
+  width: 80%;
+}
+.article-writer .container .editor-container {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 20px;
+  background-color: #fff;
+}
+.article-writer .container .editor-container h2 {
+  margin-bottom: 20px;
+}
+.article-writer .container .editor-container .editor-wrapper {
+  border: 1px solid #e2e2e2;
+  min-height: 300px;
+}
+.article-writer .container .editor-container .editor-wrapper .editor .ql-toolbar {
+  border-bottom: 1px solid #e2e2e2;
+}
+.article-writer .container .editor-container .editor-wrapper .editor .ql-toolbar:first-child {
+  display: none !important;
+}
+.article-writer .container .editor-container .editor-wrapper .editor .ql-container {
+  height: 250px;
+}
+.article-writer .container .editor-container .editor-wrapper .editor .ql-container .ql-editor {
+  padding: 20px;
 }
 
 /*# sourceMappingURL=style.css.map */

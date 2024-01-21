@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article Creation Tool</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-200 font-sans flex items-center justify-center h-screen">
+    <div class="container bg-white p-8 border rounded-lg shadow-lg max-w-4xl w-full mx-4">
+        <h1 class="text-2xl font-bold mb-6">Article Generator</h1>
+        <div class="mb-6">
+            <!-- Step indicators -->
+            <div class="flex items-center">
+                <div class="step">
+                    <div class="w-6 h-6 rounded-full bg-green-500 text-white flex items-center justify-center font-bold text-xs">1</div>
+                    <div class="text-green-500 text-xs font-semibold mt-1 text-center">Brief</div>
+                </div>
+                <div class="flex-auto border-t-2 border-green-500"></div>
+                <div class="step">
+                    <div class="w-6 h-6 rounded-full bg-green-500 text-white flex items-center justify-center font-bold text-xs">2</div>
+                    <div class="text-green-500 text-xs font-semibold mt-1 text-center">Reference</div>
+                </div>
+                <div class="flex-auto border-t-2 border-gray-300"></div>
+                <div class="step">
+                    <div class="w-6 h-6 rounded-full bg-green-500 text-white flex items-center justify-center font-bold text-xs">3</div>
+                    <div class="text-green-500 text-xs font-semibold mt-1 text-center">Title</div>
+                </div>
+                <div class="flex-auto border-t-2 border-gray-300"></div>
+                <div class="step">
+                    <div class="w-6 h-6 rounded-full border-2 border-gray-300 text-gray-500 flex items-center justify-center font-bold text-xs">4</div>
+                    <div class="text-gray-500 text-xs font-semibold mt-1 text-center">Outline</div>
+                </div>
+                <div class="flex-auto border-t-2 border-gray-300"></div>
+                <div class="step">
+                    <div class="w-6 h-6 rounded-full border-2 border-gray-300 text-gray-500 flex items-center justify-center font-bold text-xs">5</div>
+                    <div class="text-gray-500 text-xs font-semibold mt-1 text-center">Article</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-6">
+            <label for="describe-topic" class="block text-sm font-medium text-gray-700">Describe your topic</label>
+            <textarea id="describe-topic" name="describe-topic" rows="5" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                      placeholder="Enter up to 500 characters about your topic." maxlength="500"></textarea>
+        </div>
+        <div class="mt-4">
+            <label for="primary-keyword" class="block text-sm font-medium text-gray-700">Primary Keyword:</label>
+            <input type="text" id="primary-keyword" name="primary-keyword" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+        </div>
+        <div class="mt-4">
+            <label for="secondary-keywords" class="block text-sm font-medium text-gray-700">Secondary Keywords:</label>
+            <input type="text" id="secondary-keywords" name="secondary-keywords" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+        </div>
+        <div class="mt-4">
+            <label for="tone" class="block text-sm font-medium text-gray-700">Tone of Voice:</label>
+            <select id="tone" name="tone" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                <option value="professional">Professional</option>
+                <option value="friendly">Friendly</option>
+                <option value="casual">Casual</option>
+            </select>
+        </div>
+        <div class="mt-4">
+            <label for="point-of-view" class="block text-sm font-medium text-gray-700">Point of View:</label>
+            <select id="point-of-view" name="point-of-view" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                <option value="first-person">First Person</option>
+                <option value="second-person">Second Person</option>
+                <option value="third-person">Third Person</option>
+            </select>
+        </div>
+        <button type="submit" class="mt-6 w-full bg-green-500 text-white rounded-md py-2 shadow-sm hover:bg-green-600">Add Reference</button>
+    </div>
+</body>
+</html>

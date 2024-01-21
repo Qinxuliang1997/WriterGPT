@@ -4,7 +4,7 @@ This project demonstrates how to build a simple Q&A system using Python, Django,
 1. Clone the repository:
 
 ```bash
-    git clone https://github.com/amirtds/python-openai
+    git clone https://github.com/Qinxuliang1997/WriterGPT
 ```
 
 1. Install the required packages:
@@ -32,67 +32,4 @@ OPENAI_API_KEY=your_api_key
 ```bash
     cd frontend
     python -m http.server 8080
-```
-```
-python-openai
-├─ .DS_Store
-├─ .gitignore
-├─ LICENSE
-├─ README.md
-├─ frontend
-│  ├─ .DS_Store
-│  └─ index.html
-├─ llm_api
-│  ├─ .DS_Store
-│  ├─ api
-│  │  ├─ .DS_Store
-│  │  ├─ .streamlit
-│  │  │  ├─ config.toml
-│  │  │  └─ credentials.toml
-│  │  ├─ __init__.py
-│  │  ├─ admin.py
-│  │  ├─ apps.py
-│  │  ├─ default.sqlite
-│  │  ├─ migrations
-│  │  │  └─ __init__.py
-│  │  ├─ models.py
-│  │  ├─ tests.py
-│  │  ├─ urls.py
-│  │  └─ views.py
-│  ├─ indexed_documents
-│  │  ├─ default__vector_store.json
-│  │  ├─ docstore.json
-│  │  ├─ graph_store.json
-│  │  └─ index_store.json
-│  ├─ llm_api
-│  │  ├─ __init__.py
-│  │  ├─ asgi.py
-│  │  ├─ settings.py
-│  │  ├─ urls.py
-│  │  └─ wsgi.py
-│  ├─ manage.py
-│  ├─ original_data
-│  │  └─ original_documents
-│  │     ├─ 国内智能网联汽车的发展现状v5.docx
-│  │     └─ 国内智能网联汽车的发展现状v6.docx
-│  ├─ postdata
-│  │  ├─ __init__.py
-│  │  ├─ admin.py
-│  │  ├─ apps.py
-│  │  ├─ migrations
-│  │  │  └─ __init__.py
-│  │  ├─ models.py
-│  │  ├─ templates
-│  │  │  ├─ success.html
-│  │  │  └─ upload.html
-│  │  ├─ tests.py
-│  │  ├─ urls.py
-│  │  ├─ utils
-│  │  │  ├─ create_index.py
-│  │  │  ├─ create_name.py
-│  │  │  └─ test.py
-│  │  └─ views.py
-│  └─ wandb
-└─ requirements.txt
-
 ```

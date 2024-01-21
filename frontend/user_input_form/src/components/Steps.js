@@ -10,8 +10,6 @@ const Steps = () => {
       <Step step={2} title={"Reference"} active={page==1}/>
       <Step step={3} title={"Title"} active={page==2}/>
       <Step step={4} title={"Outline"} active={page>=3}/>
-      <Step step={5} title={"Process"} active={page>=4}/>
-
     </div>
   )
 }

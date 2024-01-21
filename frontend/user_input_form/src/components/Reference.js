@@ -1,68 +1,98 @@
-import React, { useState, useRef, useEffect } from "react";
-import * as LR from "@uploadcare/blocks";
-import { PACKAGE_VERSION } from "@uploadcare/blocks/env";
-LR.registerBlocks(LR);
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const Reference = () => {
-  const dataOutputRef = useRef(null);
-  const [files, setFiles] = useState([]);
+function Reference() {
+    const [uploadStatus, setUploadStatus] = useState('');
+    const [uploadedFiles, setUploadedFiles] = useState([]);
 
-  const handleUploaderEvent = (event) => {
-    const { detail: { data } } = event;
-    setFiles(data);
-  };
+    useEffect(() => {
+        fetchUploadedFiles();
+    }, []);
 
-  useEffect(() => {
-    const el = dataOutputRef.current;
-    if (el) {
-      el.addEventListener("lr-data-output", handleUploaderEvent);
-    }
-    return () => {
-      if (el) {
-        el.removeEventListener("lr-data-output", handleUploaderEvent);
-      }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setUploadStatus('Uploading...');
+        const formData = new FormData(e.target);
+
+        try {
+            await axios.post('http://localhost:8000/postdata/upload/', formData);
+            setUploadStatus('Upload successful!');
+            fetchUploadedFiles();
+        } catch (error) {
+            setUploadStatus('Error occurred!');
+            console.error('Error:', error);
+        }
     };
-  }, [dataOutputRef]);
 
-  return (
-    <div>
-      <h2>Article Reference</h2>
-      <section
-        // style={{
-        //   "--uploadcare-pubkey": process.env.REACT_APP_VITE_UPLOADCARE_API_KEY,
-        // }}
-      >
-        <lr-config
-            ctx-name="my-uploader"
-            pubkey="YOUR_PUBLIC_KEY"
-            img-only="false"
-            multiple="true"
-            max-local-file-size-bytes="524288000"
-            source-list="local, url,evernote"
-        >
-        </lr-config>
-        <lr-file-uploader-inline
-          ctx-name="my-uploader"
-          css-src={`https://cdn.jsdelivr.net/npm/@uploadcare/blocks@${PACKAGE_VERSION}/web/lr-file-uploader-inline.min.css`}
-        >
-        </lr-file-uploader-inline>
-        <lr-data-output
-            ctx-name="my-uploader"
-            ref={dataOutputRef}
-            use-event
-            hidden
-            onEvent={handleUploaderEvent}
-        />
-        {/* <div className="file-gallery">
-          {files.map((file) => (
-            <p key={file.uuid}>{file.name}</p>
-          ))}
-        </div> */}
-      </section>
+    const handleDeleteAllFiles = async () => {
+        try {
+            await axios.delete('http://localhost:8000/postdata/upload/');
+            setUploadedFiles([]);
+            alert('All files deleted');
+        } catch (error) {
+            console.log('Error:', error);
+        }
+    };
 
-    </div>
+    const fetchUploadedFiles = async () => {
+        try {
+            const response = await axios.get('http://localhost:8000/postdata/upload/');
+            setUploadedFiles(response.data.uploaded_files);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
 
-  );
-};
+    return (
+        <div className="info">
+            <h2>Reference</h2>
+            {/* <h3>You can upload your references here</h3> */}
+            <form className="uploadForm" enctype="multipart/form-data" onSubmit={handleSubmit}>
+                <div className="fields">
+                    <label id="reference_text" for="text">Text:</label>
+                    <textarea id="text" name="text" placeholder="Text"></textarea>
+                </div>
+                <div className="fields">
+                    <label for="file"> File (pdf,txt,doc):</label>
+                    <input 
+                        type="file" 
+                        id="single_file" 
+                        name="single_file" 
+                        accept=".pdf, .txt, .docx" 
+                    />
+                </div>
+                <div className="fields">
+                    <label for="website">Website URL:</label>
+                    <input
+                        type="url" 
+                        id="website" 
+                        name="website" 
+                        placeholder="Website URL"
+                    />
+                </div>
+                {/* <div>
+                    <label for="folder">Folder:</label>
+                    <input
+                        type="file" 
+                        id="folder" 
+                        name="folder"
+                        webkitdirectory
+                        directory 
+                        multiple
+                        />
+                </div> */}
+                <button type="submit" id="submitUpload">Upload</button>
+            </form>
+            {/* <div id="uploadStatus" className="text-center mt-4">{uploadStatus}</div> */}
+            <h3>Uploaded Files:</h3>
+            <div id="uploadedFilesList" className="mt-4">
+                <ul id="filesList" className="list-disc list-inside">
+                    {uploadedFiles.map((file, index) => <li key={index}>{file}</li>)}
+                </ul>
+            </div>
+            <button onClick={handleDeleteAllFiles}>Delete All Files</button>
+        </div>
+    );
+}
 
 export default Reference;

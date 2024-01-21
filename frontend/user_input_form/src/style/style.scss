@@ -10,11 +10,11 @@ $red: #c94451;
   font-family: "Ubuntu", sans-serif;
 }
 body{
-  background-color: #eef5ff;
+  background-color: #f2f7ff;
 }
 ///////////// All page size and container
 main {
-  background-color: #e0f7ff;
+  background-color: #f2fcff;
   width: 100%;
   height: 100vh;
   display: flex;
@@ -143,6 +143,55 @@ h2 {
     }
   }
 }
+//////////// Reference
+.info {
+  .uploadForm {
+    margin-top: 25px;
+    button{
+      margin-top: 10px;
+      width: 100%;
+      height: 40px;
+      margin-left: auto; 
+      margin-right: auto; 
+      display: block;
+    }    
+    .fields {
+      margin-top: 25px;      
+      label {
+        color: $Darkblue;
+      }
+      input,textarea{
+        width: 100%;
+        font-size: 16px;
+        padding: 15px;
+        border-radius: 8px;
+        border: hsl(229, 24%, 87%) 1px solid;
+        margin-top: 10px;
+        outline: none;
+        color: $Darkblue;
+        font-weight: 500;
+        &:focus {
+          border-color: $blue;
+        }
+        &::placeholder {
+          color: $gray;
+        }
+      }
+    }
+  }
+  h3{
+    margin-top: 20px;
+  }
+  button{
+    margin-top: 10px;
+    width: 100%;
+    height: 40px;
+    margin-left: auto; 
+    margin-right: auto; 
+    display: block;
+  }    
+}
+
 //////////// Outline
 h2 {
   font-size: 32px;
@@ -202,11 +251,53 @@ h2 {
       right: 30px; 
       // padding: 0 10px; 
     }
-
     // 删除按钮样式
     .delete-btn {
       right: 0; 
       // padding: 0 10px; 
+    }
+  }
+}
+
+//////////// Article
+.article-writer {
+  .container {
+    // Adjust the padding and margins as needed
+    padding: 20px;
+    margin: auto;
+    width: 80%; // Adjust the width as necessary
+
+    .editor-container {
+      border: 1px solid #ccc; // Color for the border
+      border-radius: 4px; // Rounded corners
+      padding: 20px;
+      background-color: #fff; // Assuming a white background
+
+      h2 {
+        margin-bottom: 20px; // Space between the title and the editor
+      }
+
+      .editor-wrapper {
+        border: 1px solid #e2e2e2; // Color for the editor border
+        min-height: 300px; // Minimum height for the editor
+        .editor {
+          // Styles for the Quill editor
+          .ql-toolbar {
+            border-bottom: 1px solid #e2e2e2; // Border color for the toolbar
+
+            // Inserted CSS code here
+            &:first-child {
+              display: none !important;
+            }
+          }
+          .ql-container {
+            height: 250px; // Adjust the height as needed
+            .ql-editor {
+              padding: 20px;
+            }
+          }
+        }
+      }
     }
   }
 }
