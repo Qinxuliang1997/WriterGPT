@@ -13,13 +13,9 @@ This project demonstrates how to build a simple Q&A system using Python, Django,
     pip install -r requirements.txt
 ```
 
-1. Create a `.env` file in the root directory of the project and add your OpenAI API key:
+2. [Set your ‘OPENAI_API_KEY’ Environment Variable](https://help.openai.com/en/articles/5112595-best-practices-for-api-key-safety)
 
-```
-OPENAI_API_KEY=your_api_key
-```
-
-1. Run migration and start the server:
+3. Run migration and start the server:
 
 ```bash
     cd llm_api
@@ -27,9 +23,9 @@ OPENAI_API_KEY=your_api_key
     python manage.py runserver
 ```
 
-1. Run the frontend:
+4. Run the frontend:
 
 ```bash
-    cd frontend
-    python -m http.server 8080
+    cd frontend/user_input_form
+    npm start
 ```
