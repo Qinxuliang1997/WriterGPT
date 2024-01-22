@@ -7,15 +7,20 @@ This project demonstrates how to build a simple Q&A system using Python, Django,
     git clone https://github.com/Qinxuliang1997/WriterGPT
 ```
 
-1. Install the required packages:
+2. Install the required packages:
     
 ```bash
     pip install -r requirements.txt
 ```
 
-2. [Set your ‘OPENAI_API_KEY’ Environment Variable](https://help.openai.com/en/articles/5112595-best-practices-for-api-key-safety)
+```bash
+    cd frontend/user_input_form
+    npm install
+```
 
-3. Run migration and start the server:
+3. [Set your OPENAI_API_KEY Environment Variable](https://help.openai.com/en/articles/5112595-best-practices-for-api-key-safety)
+
+4. Run migration and start the server:
 
 ```bash
     cd llm_api
@@ -23,7 +28,7 @@ This project demonstrates how to build a simple Q&A system using Python, Django,
     python manage.py runserver
 ```
 
-4. Run the frontend:
+5. Run the frontend:
 
 ```bash
     cd frontend/user_input_form
