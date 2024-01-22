@@ -56,7 +56,12 @@ class UploadView(APIView):
                 index_thread = threading.Thread(target=index_documents, args=(os.path.join(original_data_dir, 'original_documents', folder_file.name)))
                 index_thread.start()
                 threads.append(index_thread)
-        uploaded_files, _, _ = get_file_list(original_data_dir)        
+        uploaded_files, _, _ = get_file_list(original_data_dir) 
+        indexed_data_dir = os.path.join(os.path.dirname(__file__), '..', 'indexed_documents')
+        # Wait for all threads to complete
+        for thread in threads:
+            thread.join()
+        save_all_index(indexed_data_dir)    
         return JsonResponse({'uploaded_files': uploaded_files}, status=status.HTTP_200_OK)
     
     def delete(self, request, *args, **kwargs):

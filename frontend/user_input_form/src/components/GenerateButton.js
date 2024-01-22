@@ -28,7 +28,7 @@ const GenerateButton = () => {
       }
       const data = await response.json();
       console.log('成功发送：', data);
-      dispatch(fill(data));
+      dispatch(fill({content:data.content}));
       navigate('/article');
     } catch (error) {
       console.error('Error sending data to backend', error);

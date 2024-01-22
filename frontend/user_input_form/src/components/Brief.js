@@ -32,8 +32,6 @@ const Brief = () => {
     dispatch(info({...article,topic:refTopic.current.value,primaryKeyword:refPrimaryKeywords.current.value,secondaryKeywords:refSecondaryKeywords.current.value,tone:refTone.current.value,view:refView.current.value}));
   }, [perinfo.topic, perinfo.primaryKeyword, perinfo.secondaryKeywords, perinfo.tone, perinfo.view]);
 
-
-
   return (
     <div className="info">
       <h2>Article Description</h2>

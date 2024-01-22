@@ -39,8 +39,10 @@ class AskView(View):
         view = description.get('view', '')
         title = description.get('title', '')
         outline = description.get('outline', [])
-        print(outline)
-        prompt = ' '.join([i+j for i,j in description.items()])
+        description['outline'] = ' '.join(outline)
+        del description['nextClick']
+        prompt = '\n'.join([i +':'+ j for i,j in description.items()])
+        print('prompt:\n' + prompt)
         return prompt
     
     def write(self, description):
@@ -78,13 +80,14 @@ class AskView(View):
     def post(self, request, *args, **kwargs):
         try:
             data = json.loads(request.body)
-            # content = self.write(data)
+            content = self.write(data)
             return JsonResponse({
                 'status': 'success',
                 'message': 'Article data received successfully.',
                 'answer': 'good!',
                 'Access-Control-Allow-Origin': 'http://localhost:3000',
-                'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE'
+                'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
+                'content': content,
             }, status=200)
         except json.JSONDecodeError:
             # 如果请求体不是有效的 JSON，返回错误
