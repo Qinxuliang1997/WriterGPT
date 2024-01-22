@@ -1,4 +1,4 @@
-This project demonstrates how to build a simple Q&A system using Python, Django, and OpenAI's GPT. The system can answer questions based on the context provided from a specific article. The user interface is built using HTML and Tailwind.
+This project is a simple writter system using Python, Django, LlamaIndex, and OpenAI's GPT. The system can write content based on the context provided from some related uploaded articles. The user interface is built using Node.js and React.
 
 ## Getting Started
 1. Clone the repository:
