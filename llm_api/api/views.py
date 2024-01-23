@@ -42,6 +42,7 @@ class AskView(View):
         description['outline'] = ' '.join(outline)
         del description['nextClick']
         prompt = '\n'.join([i +':'+ j for i,j in description.items()])
+        prompt = "write an Chinese article accouding to this descriptioin:\n" + prompt
         print('prompt:\n' + prompt)
         return prompt
     
@@ -52,22 +53,23 @@ class AskView(View):
         storage_context = StorageContext.from_defaults(persist_dir=index_file_path)
         # load index
         index = load_index_from_storage(storage_context)
-        # configure retriever
-        retriever = VectorIndexRetriever(
-            index=index,
-            similarity_top_k=2,
-        )
-        # configure response synthesizer
-        response_synthesizer = get_response_synthesizer()
-        # assemble query engine
-        query_engine = RetrieverQueryEngine(
-            retriever=retriever,
-            response_synthesizer=response_synthesizer,
-            node_postprocessors=[
-                SimilarityPostprocessor(similarity_cutoff=0.9)
-            ]
-        )
-        response = query_engine.query(prompt)
+        query_engine = index.as_chat_engine()
+        # # configure retriever
+        # retriever = VectorIndexRetriever(
+        #     index=index,
+        #     similarity_top_k=2,
+        # ) 
+        # # configure response synthesizer
+        # response_synthesizer = get_response_synthesizer()
+        # # assemble query engine
+        # query_engine = RetrieverQueryEngine(
+        #     retriever=retriever,
+        #     response_synthesizer=response_synthesizer,
+        #     node_postprocessors=[
+        #         SimilarityPostprocessor(similarity_cutoff=0.9)
+        #     ]
+        # )
+        response = query_engine.chat(prompt)
         print(response)  
         return response.response
     # def get(self, request, *args, **kwargs):
