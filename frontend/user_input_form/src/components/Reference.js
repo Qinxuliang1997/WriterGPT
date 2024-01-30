@@ -47,13 +47,13 @@ function Reference() {
         <div className="info">
             <h2>Reference</h2>
             {/* <h3>You can upload your references here</h3> */}
-            <form className="uploadForm" enctype="multipart/form-data" onSubmit={handleSubmit}>
+            <form className="uploadForm" encType="multipart/form-data" onSubmit={handleSubmit}>
                 <div className="fields">
-                    <label id="reference_text" for="text">Text:</label>
+                    <label id="reference_text" htmlFor="text">Text:</label>
                     <textarea id="text" name="text" placeholder="Text"></textarea>
                 </div>
                 <div className="fields">
-                    <label for="file"> File (pdf,txt,doc):</label>
+                    <label htmlFor="file"> File (pdf,txt,doc):</label>
                     <input 
                         type="file" 
                         id="single_file" 
@@ -62,7 +62,7 @@ function Reference() {
                     />
                 </div>
                 <div className="fields">
-                    <label for="website">Website URL:</label>
+                    <label htmlFor="website">Website URL:</label>
                     <input
                         type="url" 
                         id="website" 
@@ -71,7 +71,7 @@ function Reference() {
                     />
                 </div>
                 {/* <div>
-                    <label for="folder">Folder:</label>
+                    <label htmlFor="folder">Folder:</label>
                     <input
                         type="file" 
                         id="folder" 

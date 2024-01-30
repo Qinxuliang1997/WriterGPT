@@ -42,7 +42,7 @@ class AskView(View):
         description['outline'] = ' '.join(outline)
         del description['nextClick']
         prompt = '\n'.join([i +':'+ j for i,j in description.items()])
-        prompt = "write an Chinese article accouding to this descriptioin:\n" + prompt
+        prompt = "write an Chinese article accourding to this descriptioin:\n" + prompt
         print('prompt:\n' + prompt)
         return prompt
     

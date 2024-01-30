@@ -12,17 +12,17 @@ const NavigationButtons = () => {
   const nextClick=()=>{
     console.log(article)
     dispatch(info({...article,nextClick:true}));
-    if(page==0){
+    if(page===0){
       dispatch(next());
       dispatch(info({...article,nextClick:false}))
     }
-    if(page!=0){
+    if(page!==0){
       dispatch(next());
     }
   }
   return (
-    <div className={page==0?'navigation btnRight':'navigation'}>
-      {page!=0 &&<button className='btn1' onClick={()=>dispatch(back())}>Go Back</button>}
+    <div className={page===0?'navigation btnRight':'navigation'}>
+      {page!==0 &&<button className='btn1' onClick={()=>dispatch(back())}>Go Back</button>}
       <button className='btn2'onClick={nextClick}>{"Next Step"}</button>
     </div>
   )

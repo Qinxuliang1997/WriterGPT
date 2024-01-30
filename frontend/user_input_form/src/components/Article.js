@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import Quill from 'quill';
 import { useSelector, useDispatch } from 'react-redux';
-import { fill } from '../features/content';
+// import { fill } from '../features/content';
 
 function Article() {
     const editorRef = useRef(null);
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const content = useSelector((e) => e.content.value.content);
 
     // 初始化编辑器的 useEffect
