@@ -24,30 +24,47 @@ from llama_index import set_global_handler,global_handler
 llama_index.set_global_handler("simple")
 
 # define LLM
-llm = OpenAI(model="gpt-3.5-turbo", temperature=0, max_tokens=200, api_key=os.getenv("OPENAI_API_KEY"))
+llm = OpenAI(model="gpt-3.5-turbo-1106", temperature=0, max_tokens=4000, api_key=os.getenv("OPENAI_API_KEY"))
 
 # configure service context
 service_context = ServiceContext.from_defaults(llm=llm)
 set_global_service_context(service_context)
 
 class AskView(View):
-    def parese_description(self, description):
-        topic = description.get('topic', '')
-        primaryKeyword = description.get('primaryKeyword', '')
-        secondaryKeywords = description.get('secondaryKeywords', '')
-        tone = description.get('tone', '')
-        view = description.get('view', '')
-        title = description.get('title', '')
-        outline = description.get('outline', [])
-        description['outline'] = ' '.join(outline)
-        del description['nextClick']
-        prompt = '\n'.join([i +':'+ j for i,j in description.items()])
-        prompt = "write an Chinese article accourding to this descriptioin:\n" + prompt
-        print('prompt:\n' + prompt)
+
+    def generate_prompt(self, prompt_details):
+        print('prompt_details')
+        print(prompt_details)
+        prompt = f"请根据以下描述，使用中文，撰写一篇关于{prompt_details['topic']}的文章，文章应包含以下几个部分： "
+        for idx, point in enumerate(prompt_details['outline'], start=1):
+            prompt += f"{idx}. {point}；"
+        prompt += f"请确保文章内容围绕{prompt_details['primaryKeyword']}这一主题，同时同时涉及{prompt_details['secondaryKeywords']}这些关键词。"
+        prompt += f"文章应该采用{prompt_details['view']}、{prompt_details['tone']}的语气，并在文章中嵌入相关的事实材料以支持论述。最后，请使用Markdown格式进行排版，确保文章结构清晰。"
         return prompt
+        
+    # def parese_description(self, description):
+    #     topic = description.get('topic', '')
+    #     primaryKeyword = description.get('primaryKeyword', '')
+    #     secondaryKeywords = description.get('secondaryKeywords', '')
+    #     tone = description.get('tone', '')
+    #     view = description.get('view', '')
+    #     title = description.get('title', '')
+    #     outline = description.get('outline', [])
+    #     description['outline'] = ' '.join(outline)
+    #     del description['nextClick']
+    #     prompt = '\n'.join([i +':'+ j for i,j in description.items()])
+    #     prompt_string = """根据下面提供的描述，使用中文写一篇2000字的文章，要求：
+    #                        1.根据提供的目录，逐段生成文章；
+    #                        2.文章的内容中必须围绕关键词进行书写，符合语气、人称的要求；
+    #                        3.在参考文献中摘录与本文书写内容相关的事实材料，然后放到文章的相应部分；
+    #                        4.使用markdown格式返回，此外不要有其他任何描述性话语 :\n"""
+    #     prompt = prompt_string + prompt
+    #     print('prompt:\n' + prompt)
+    #     return prompt
     
     def write(self, description):
-        prompt = self.parese_description(description)
+        # prompt = self.parese_description(description)
+        prompt = self.generate_prompt(description)
         index_file_path = os.path.join(settings.BASE_DIR, 'indexed_documents')
         # rebuild storage context
         storage_context = StorageContext.from_defaults(persist_dir=index_file_path)

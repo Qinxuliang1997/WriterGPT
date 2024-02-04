@@ -66,9 +66,9 @@ const Brief = () => {
             ref={refTone}
             onChange={e => setPer({ ...perinfo, tone: e.target.value})}
           >
-            <option value="option1">Casual</option>
-            <option value="option2">Professional</option>
-            <option value="option3">Formal</option>
+            <option value="Casual">Casual</option>
+            <option value="Professional">Professional</option>
+            <option value="Formal">Formal</option>
           </select>
         </div>
         <div className="fields">
@@ -77,9 +77,9 @@ const Brief = () => {
             ref={refView}
             onChange={e => setPer({ ...perinfo, view: e.target.value})}
           >
-            <option value="option1">First Person Singular</option>
-            <option value="option2">Second Person Singular</option>
-            <option value="option3">Third Person Singular</option>
+            <option value="First Person Singular">First Person Singular</option>
+            <option value="Second Person Singular">Second Person Singular</option>
+            <option value="Third Person Singular">Third Person Singular</option>
           </select>
         </div>
 
