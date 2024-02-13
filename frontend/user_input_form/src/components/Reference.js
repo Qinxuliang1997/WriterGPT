@@ -83,7 +83,7 @@ function Reference() {
                 </div> */}
                 <button type="submit" id="submitUpload">Upload</button>
             </form>
-            {/* <div id="uploadStatus" className="text-center mt-4">{uploadStatus}</div> */}
+            {/* <div id="uploadStatus" className="text-center mt-4" style={{maxHeight: '80px', overflowY: 'auto'}}>{uploadStatus}</div> */}
             <h3>Uploaded Files:</h3>
             <div id="uploadedFilesList" className="mt-4">
                 <ul id="filesList" className="list-disc list-inside">
