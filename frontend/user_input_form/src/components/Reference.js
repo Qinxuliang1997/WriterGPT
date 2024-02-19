@@ -85,7 +85,7 @@ function Reference() {
             </form>
             {/* <div id="uploadStatus" className="text-center mt-4" style={{maxHeight: '80px', overflowY: 'auto'}}>{uploadStatus}</div> */}
             <h3>Uploaded Files:</h3>
-            <div id="uploadedFilesList" className="mt-4">
+            <div id="uploadedFilesList" className="mt-4" style={{maxHeight: '80px', overflowY: 'auto'}}>
                 <ul id="filesList" className="list-disc list-inside">
                     {uploadedFiles.map((file, index) => <li key={index}>{file}</li>)}
                 </ul>
