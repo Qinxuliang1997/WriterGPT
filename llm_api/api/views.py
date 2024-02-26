@@ -2,7 +2,8 @@ import os
 import json
 from django.conf import settings
 from django.http import JsonResponse
-from django.views import View
+# from django.views import View
+from rest_framework.views import APIView
 import llama_index
 from llama_index import (StorageContext, 
                          load_index_from_storage, 
@@ -30,7 +31,7 @@ llm = OpenAI(model="gpt-3.5-turbo-1106", temperature=0, max_tokens=4000, api_key
 service_context = ServiceContext.from_defaults(llm=llm)
 set_global_service_context(service_context)
 
-class AskView(View):
+class AskView(APIView):
 
     def generate_prompt(self, prompt_details):
         print('prompt_details')

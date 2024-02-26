@@ -34,7 +34,7 @@ const Brief = () => {
 
   return (
     <div className="info">
-      <h2>Article Description</h2>
+      {/* <h2>Article Description</h2> */}
       <form className="form" autoComplete="on">
         <div className="fields">
           <label>Topic</label>

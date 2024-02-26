@@ -23,7 +23,7 @@ const Title = () => {
 
   return (
     <div className="info">
-      <h2>Article Title</h2>
+      {/* <h2>Article Title</h2> */}
       <form className="form" autoComplete="on">
         <div className="fields">
           <label>Title</label>

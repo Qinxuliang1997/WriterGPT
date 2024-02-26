@@ -32,8 +32,9 @@ const Outline = () => {
 
   return (
     <div className="info">
-      <h2>Article Outline</h2>
+      {/* <h2>Article Outline</h2> */}
       <div className="outlines-container" style={{ maxHeight: '500px', overflowY: 'auto' }}>
+        <label>Outline</label>
         {outlines.map((outline, index) => (
           <div key={index} className="outline-item">
             <input

@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
 function Reference() {
     const [uploadStatus, setUploadStatus] = useState('');
     const [uploadedFiles, setUploadedFiles] = useState([]);
-
+    const  user_name = localStorage.getItem('user_name');
+    const textInputRef = useRef(null);  // 添加一个引用来访问文本输入域
+    const fileInputRef = useRef(null);  // 添加一个引用来访问文件输入域
+    const urlInputRef = useRef(null);
+    
     useEffect(() => {
         fetchUploadedFiles();
     }, []);
@@ -13,11 +17,19 @@ function Reference() {
         e.preventDefault();
         setUploadStatus('Uploading...');
         const formData = new FormData(e.target);
-
         try {
-            await axios.post('http://localhost:8000/postdata/upload/', formData);
-            setUploadStatus('Upload successful!');
-            fetchUploadedFiles();
+            const response = await axios.post('http://localhost:8000/postdata/upload/', formData);
+            if (response.status === 201) {  // 假设状态码 200 表示上传成功
+                setUploadStatus('Upload successful!');
+                fetchUploadedFiles();
+                // 上传成功后清空输入内容
+                textInputRef.current.value = "";  // 清空文本输入域
+                fileInputRef.current.value = "";  // 清空文件输入域
+                urlInputRef.current.value= "";
+            } else {
+                // 处理非 200 响应状态码
+                setUploadStatus('Upload failed, please try again.');
+            }
         } catch (error) {
             setUploadStatus('Error occurred!');
             console.error('Error:', error);
@@ -45,16 +57,22 @@ function Reference() {
 
     return (
         <div className="info">
-            <h2>Reference</h2>
+            {/* <h2>Reference</h2> */}
             {/* <h3>You can upload your references here</h3> */}
             <form className="uploadForm" encType="multipart/form-data" onSubmit={handleSubmit}>
                 <div className="fields">
                     <label id="reference_text" htmlFor="text">Text:</label>
-                    <textarea id="text" name="text" placeholder="Text"></textarea>
+                    <textarea 
+                        ref={textInputRef} 
+                        id="text" 
+                        name="text" 
+                        placeholder="Text">
+                    </textarea>
                 </div>
                 <div className="fields">
                     <label htmlFor="file"> File (pdf,txt,doc):</label>
-                    <input 
+                    <input
+                        ref={fileInputRef}
                         type="file" 
                         id="single_file" 
                         name="single_file" 
@@ -64,9 +82,10 @@ function Reference() {
                 <div className="fields">
                     <label htmlFor="website">Website URL:</label>
                     <input
+                        url={urlInputRef}
                         type="url" 
-                        id="website" 
-                        name="website" 
+                        id="url" 
+                        name="url" 
                         placeholder="Website URL"
                     />
                 </div>

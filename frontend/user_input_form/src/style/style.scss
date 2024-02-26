@@ -12,23 +12,42 @@ $red: #c94451;
 body{
   background-color: #f2f7ff;
 }
+//////////NavigationBar/////
+.navbar {
+  background-color: #2b5f7f;
+  height: 35px;
+  .nav-link {
+    color: #ffffff;
+    &:hover {
+      color: darken(#f2fcff, 50%);
+    }
+  }
+  .navbarbrand{
+    color: white;
+  }
+}
 ///////////// All page size and container
 main {
   background-color: #f2fcff;
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 50px);
   display: flex;
   justify-content: center;
+  // margin-top: 20px;
+  flex-direction: column;
+  align-items: center; 
 }
 .Container {
   min-width: 1000px;
-  height: 700px;
+  height: 88%;
+  width: 50%;
   background-color: hsl(0, 0%, 100%);
   margin: auto;
-  padding: 16px 15px 15px 15px;
+  padding: 10px 15px 15px 15px;
   border-radius: 1rem;
   display: flex;
   box-shadow: 0 5px 10px #d6d9e6;
+  box-sizing: border-box;
 }
 .content {
   min-width: 55%;
@@ -37,14 +56,50 @@ main {
   position: relative;
   padding-top: 10px;
 }
-//////////Navigation/////
-.navigation {
+//////////Login/////
+
+.Auth-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 90vh;
+}
+
+.Auth-form {
+  width: 420px;
+  box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
+  padding-top: 30px;
+  padding-bottom: 20px;
+  border-radius: 8px;
+  background-color: white;
+}
+
+.Auth-form-content {
+  padding-left: 12%;
+  padding-right: 12%;
+}
+
+.Auth-form-title {
+  text-align: center;
+  margin-bottom: 1em;
+  font-size: 24px;
+  color: rgb(34, 34, 34);
+  font-weight: 800;
+}
+
+label {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(34, 34, 34);
+}
+//////////NavigationButton/////
+.btnNavigation {
   width: 100%;
   position: absolute;
   bottom: 15px;
   display: flex;
   justify-content: space-between;
-  
   button {
     padding: 15px 25px;
     font-weight: 700;
@@ -67,22 +122,23 @@ main {
 }
 //////////// Steps section
 .Steps {
-  position: absolute;
-  top: 10px;
-  width: 50%;
-  height: 10%;
-  left: 25%;
+  // position: absolute;
+  // top: 30px;
+  width: 100%;
+  height: 80px;
+  // padding: 5px 10% 0 10%;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 5px;
+  // padding-top: 5px;
 }
 .Step {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 30px 40px;
+  // margin: 0px 100px;
+  // padding: 0px 40px;
   .stepNumber {
     width: 30px;
     height: 30px;
@@ -92,7 +148,7 @@ main {
     color: white;
     border-radius: 100%;
     font-weight: 500;
-    border: white 1px solid;
+    // border: white 1px solid;
     font-weight: 700;
   }
   .active {
@@ -104,8 +160,9 @@ main {
     p {
       font-weight: 500;
       font-size: 16px;
-      letter-spacing: 1px;
-      color: white;
+      letter-spacing: 2px;
+      color: rgb(50, 113, 169);
+      margin-bottom: 0px;
     }
   }
 }
@@ -117,13 +174,13 @@ h2 {
 }
 .info {
   .form {
-    margin-top: 30px;
+    margin-top: 0px;
     .fields {
-      margin-top: 25px;
+      margin-top: 20px;
       input,select {
         width: 100%;
         font-size: 16px;
-        padding: 15px;
+        padding: 10px;
         border-radius: 8px;
         border: hsl(229, 24%, 87%) 1px solid;
         margin-top: 10px;
@@ -146,7 +203,7 @@ h2 {
 //////////// Reference
 .info {
   .uploadForm {
-    margin-top: 25px;
+    margin-top: 0px;
     button{
       margin-top: 10px;
       width: 100%;
@@ -156,14 +213,14 @@ h2 {
       display: block;
     }    
     .fields {
-      margin-top: 25px;      
+      margin-top: 10px;   
       label {
         color: $Darkblue;
       }
       input,textarea{
         width: 100%;
         font-size: 16px;
-        padding: 15px;
+        padding: 10px;
         border-radius: 8px;
         border: hsl(229, 24%, 87%) 1px solid;
         margin-top: 10px;
@@ -178,6 +235,10 @@ h2 {
         }
       }
     }
+  }
+  .mt-4{
+    max-height: 60px;
+    overflow: auto;
   }
   h3{
     margin-top: 20px;
@@ -213,7 +274,7 @@ h2 {
     input{
       width: 100%;
       font-size: 16px;
-      padding: 15px;
+      padding: 10px;
       border-radius: 8px;
       border: hsl(229, 24%, 87%) 1px solid;
       margin-top: 10px;

@@ -24,8 +24,8 @@ function Preliminary() {
   }
   return (
     <main>
+      <Steps/>
       <div className="Container">
-        <Steps/>
         <div className="content">
         {PageDisplay()}
         {page !=3 && <NavigationButton/>} 

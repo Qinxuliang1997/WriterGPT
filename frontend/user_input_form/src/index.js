@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './style/style.css';
 import 'quill/dist/quill.snow.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'normalize.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {configureStore} from '@reduxjs/toolkit'
@@ -10,6 +12,7 @@ import pageReducer  from './features/pages';
 import articleReducer from './features/description'
 import fileUploadReducer from './features/file';
 import contentReducer from './features/content'
+import './interceptors/axios';
 
 const store=configureStore({
   reducer: {

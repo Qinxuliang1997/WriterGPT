@@ -39,7 +39,7 @@ const GenerateButton = () => {
   };
 
   return (
-    <div className={'navigation'}>
+    <div className={'btnNavigation'}>
       {errorMessage && <div className="error-message">{errorMessage}</div>}
       <button className='btn1' onClick={() => dispatch(back())}>Go Back</button>
       <button className='btn2' onClick={GenerateClick} disabled={isLoading}>
