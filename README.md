@@ -20,6 +20,11 @@ This project is a simple writter system using Python, Django, LlamaIndex, and Op
 
 3. [Set your OPENAI_API_KEY Environment Variable](https://help.openai.com/en/articles/5112595-best-practices-for-api-key-safety)
 
+windows: 
+```
+setx OPENAI_API_KEY “<yourkey>”
+```
+
 4. Run migration and start the server:
 
 ```bash
@@ -34,3 +39,7 @@ This project is a simple writter system using Python, Django, LlamaIndex, and Op
     cd frontend/user_input_form
     npm start
 ```
+
+6. Addition
+
+make new path: WriterGPT\llm_api\original_data\original_documents

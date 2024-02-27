@@ -36,10 +36,10 @@ class AskView(APIView):
     def generate_prompt(self, prompt_details):
         print('prompt_details')
         print(prompt_details)
-        prompt = f"请根据以下描述，使用中文，撰写一篇关于{prompt_details['topic']}的文章，文章应包含以下几个部分： "
+        prompt = f"请根据以下描述，使用中文，撰写一篇关于“{prompt_details['topic']}”的文章，文章应包含以下几个部分：\n"
         for idx, point in enumerate(prompt_details['outline'], start=1):
-            prompt += f"{idx}. {point}；"
-        prompt += f"请确保文章内容围绕{prompt_details['primaryKeyword']}这一主题，同时同时涉及{prompt_details['secondaryKeywords']}这些关键词。"
+            prompt += f"{idx}. {point}；\n"
+        prompt += f"请确保文章内容围绕“{prompt_details['primaryKeyword']}”这一主题，同时涉及“{prompt_details['secondaryKeywords']}”这些关键词。\n"
         prompt += f"文章应该采用{prompt_details['view']}、{prompt_details['tone']}的语气，并在文章中嵌入相关的事实材料以支持论述。最后，请使用Markdown格式进行排版，确保文章结构清晰。"
         return prompt
         
