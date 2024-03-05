@@ -6,7 +6,6 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from .forms import UploadedFileForm
 from .models import UploadedFile
-from django.contrib.auth.models import User
 
 class UploadView(APIView):
     permission_classes = [IsAuthenticated]

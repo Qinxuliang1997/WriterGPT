@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import AskView
+from .views import GenerateView
 
 urlpatterns = [
-    path('ask/', AskView.as_view(), name='ask_view'),
+    path('ask/', GenerateView.as_view(), name='generate_view'),
 ]

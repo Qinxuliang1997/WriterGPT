@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { back } from '../features/pages';
 import { fill } from '../features/content';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'; // Import axios
 
 const GenerateButton = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -16,19 +17,14 @@ const GenerateButton = () => {
     setErrorMessage('');
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/ask/', {
-        method: 'POST',
+      // Use axios for the POST request
+      const response = await axios.post('http://127.0.0.1:8000/api/ask/', article, {
         headers: {
           'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(article)
+        }
       });
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const data = await response.json();
-      console.log('成功发送：', data);
-      dispatch(fill({content:data.content}));
+      console.log('成功发送：', response.data);
+      dispatch(fill({content: response.data.content}));
       navigate('/article');
     } catch (error) {
       console.error('Error sending data to backend', error);
