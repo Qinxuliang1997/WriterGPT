@@ -21,9 +21,11 @@ venv.bak/
 *.log
 *.pot
 *.pyc
+*.xmind
 __pycache__/
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
 media/
 Multi_step_form-main/
+simplefolio-master/

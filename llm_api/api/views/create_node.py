@@ -1,15 +1,29 @@
 import os
-from llama_index import (download_loader, 
+from llama_index.core import (download_loader, 
                           SimpleDirectoryReader)
-from llama_index import Document
+from llama_index.core import Document
 from pathlib import Path
-from llama_index.node_parser import SimpleNodeParser
+# from llama_index.node_parser import SimpleNodeParser
+from llama_index.embeddings.openai import OpenAIEmbedding
+from llama_index.core.node_parser import SentenceSplitter
+from llama_index.core.extractors import TitleExtractor
+from llama_index.core.ingestion import IngestionPipeline, IngestionCache
 
-parser = SimpleNodeParser.from_defaults()
+# create the pipeline with transformations
+pipeline = IngestionPipeline(
+    transformations=[
+        SentenceSplitter(chunk_size=500, chunk_overlap=0),
+        TitleExtractor(),
+        OpenAIEmbedding(),
+    ]
+)
+
+# parser = SimpleNodeParser.from_defaults()
 
 def create_node_text(text_list):
     documents = [Document(text=t) for t in text_list]
-    node = parser.get_nodes_from_documents(documents)
+    # node = parser.get_nodes_from_documents(documents)
+    node = pipeline.run(documents=documents)
     return node
 
 def create_node_url(url_list):
@@ -17,17 +31,19 @@ def create_node_url(url_list):
                                             refresh_cache=False)
     loader = SimpleWebPageReader()
     documents = loader.load_data(urls=url_list)
-    node = parser.get_nodes_from_documents(documents)
+    # node = parser.get_nodes_from_documents(documents)
+    node = pipeline.run(documents=documents)
     return node    
 
 def create_node_dir(dir_path):
     if len(os.listdir(dir_path)) != 0:
         print(os.listdir(dir_path))
         reader = SimpleDirectoryReader(
-            input_dir=dir_path, recursive=True
+            input_dir=dir_path
         )
         documents = reader.load_data()
-        node = parser.get_nodes_from_documents(documents)
+        # node = parser.get_nodes_from_documents(documents)
+        node = pipeline.run(documents=documents)
         return node            
     else:
         raise ValueError("Unsupported input format")   
@@ -53,7 +69,8 @@ def create_node_file(input_path):
         else:
             raise ValueError("Unsupported input format")
         print("finished" , input_path)
-        node = parser.get_nodes_from_documents(documents)
+        # node = parser.get_nodes_from_documents(documents)
+        node = pipeline.run(documents=documents)
         return node
 
 # def save_all_index(output_path):  

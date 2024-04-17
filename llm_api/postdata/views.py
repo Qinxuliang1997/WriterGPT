@@ -1,5 +1,6 @@
 from rest_framework import status
 from django.http import JsonResponse
+from django.conf import settings
 import os
 import shutil
 from rest_framework.permissions import IsAuthenticated
@@ -30,7 +31,15 @@ class UploadView(APIView):
     def delete(self, request, *args, **kwargs):
         uploads = UploadedFile.objects.filter(user_name=request.user)
         uploads.delete()
-        return JsonResponse(status=status.HTTP_200_OK)
+        files_dir = os.path.join(settings.MEDIA_ROOT, f"user_{request.user.id}", 'original_files')  
+        for filename in os.listdir(files_dir):
+            file_path = os.path.join(files_dir, filename)
+            try:
+                if os.path.isfile(file_path):
+                    os.unlink(file_path)  # 删除文件
+            except Exception as e:
+                print(f'Failed to delete {file_path}. Reason: {e}')        
+        return JsonResponse({'message': 'completed!'}, status=status.HTTP_200_OK)
 
 def get_upload_list(uploads):
         upload_data = set()
