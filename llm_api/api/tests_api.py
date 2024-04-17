@@ -4,7 +4,7 @@ import os
 from openai import OpenAI
 client = OpenAI(
     # defaults to os.environ.get("OPENAI_API_KEY")
-    api_key='',
+    api_key=os.environ.get("OPENAI_API_KEY"),
 )
 print(os.environ.get("OPENAI_API_KEY"))
 chat_completion = client.chat.completions.create(
