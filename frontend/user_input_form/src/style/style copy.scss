@@ -33,18 +33,17 @@ body{
 }
 //////////NavigationBar/////
 .navbar {
-  background-color: transparent;
-  height: 80px;
+  background-color: #2b5f7f;
+  height: 35px;
   .nav-link {
-    color: $primary-color;
-    font-size: 18px;
+    color: #ffffff;
     &:hover {
-      color: darken($primary-color, 50%);
+      color: darken(#f2fcff, 50%);
     }
   }
-  // .navbarbrand{
-  //   color: rgb(23, 90, 116);
-  // }
+  .navbarbrand{
+    color: white;
+  }
 }
 ///////////// All page size and container
 main {

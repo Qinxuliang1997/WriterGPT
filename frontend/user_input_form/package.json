@@ -21,6 +21,8 @@
     "react-redux": "^9.0.2",
     "react-scripts": "5.0.1",
     "rehype-raw": "^7.0.0",
+    "scrollreveal": "^4.0.9",
+    "vanilla-tilt": "^1.8.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
