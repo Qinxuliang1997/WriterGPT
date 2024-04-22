@@ -22,8 +22,8 @@ const NavigationButtons = () => {
   }
   return (
     <div className={page===0?'btnNavigation btnRight':'btnNavigation'}>
-      {page!==0 &&<button className='btn1' onClick={()=>dispatch(back())}>Go Back</button>}
-      <button className='btn2'onClick={nextClick}>{"Next Step"}</button>
+      {page!==0 &&<button className='btn1' onClick={()=>dispatch(back())}>上一步</button>}
+      <button className='btn2'onClick={nextClick}>{"下一步"}</button>
     </div>
   )
 }

@@ -31,10 +31,10 @@ const Outline = () => {
   };
 
   return (
-    <div className="info">
+    <div className="outline">
       {/* <h2>Article Outline</h2> */}
-      <div className="outlines-container" style={{ maxHeight: '500px', overflowY: 'auto' }}>
-        <label>Outline</label>
+      <div className="outlines-container">
+        <label>目录</label>
         {outlines.map((outline, index) => (
           <div key={index} className="outline-item">
             <input
@@ -42,7 +42,7 @@ const Outline = () => {
               value={outline}
               onChange={(e) => handleChange(index, e.target.value)}
               className="outline-input"
-              placeholder="Enter outline detail here..."
+              placeholder="e.g. 引言"
             />
             {/* Add button with the add-btn class */}
             <button

@@ -1,0 +1,12 @@
+// https://react-bootstrap.netlify.app/docs/components/navbar/#navbar
+.navbar {
+    // background-color: transparent;
+    height: 60px;
+    .nav-link {
+      color: $primary-color;
+      font-size: 18px;
+      &:hover {
+        color: darken($primary-color, 50%);
+      }
+    }
+}

@@ -28,7 +28,7 @@ const GenerateButton = () => {
       navigate('/article');
     } catch (error) {
       console.error('Error sending data to backend', error);
-      setErrorMessage('Error sending data. Please try again.');
+      setErrorMessage('出错啦！请稍后再试');
     } finally {
       setIsLoading(false);
     }
@@ -37,9 +37,9 @@ const GenerateButton = () => {
   return (
     <div className={'btnNavigation'}>
       {errorMessage && <div className="error-message">{errorMessage}</div>}
-      <button className='btn1' onClick={() => dispatch(back())}>Go Back</button>
+      <button className='btn1' onClick={() => dispatch(back())}>上一步</button>
       <button className='btn2' onClick={GenerateClick} disabled={isLoading}>
-        {isLoading ? 'Generating...' : 'Generate'}
+        {isLoading ? '正在......' : '生成'}
       </button>
     </div>
   );

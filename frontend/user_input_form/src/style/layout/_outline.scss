@@ -1,0 +1,66 @@
+//////////// Outline
+  .outline{
+    .outlines-container{
+        margin-top: 20px;
+        max-height: 400px; /* Adjust this value to suit your design */
+        overflow-y: auto; /* Adds a vertical scrollbar when needed */
+        label {
+            color: $Darkblue;
+            font-size: 18px;
+        }
+        .outline-item{
+            margin-top: 0px;
+            position: relative; // To position the buttons absolutely within this container
+            &:hover .add-btn,
+            &:hover .delete-btn {
+                display: block; // Only show buttons on hover
+            }    
+            input{
+                width: 100%;
+                font-size: 16px;
+                padding: 10px;
+                border-radius: 8px;
+                border: hsl(229, 24%, 87%) 1px solid;
+                margin-top: 10px;
+                outline: none;
+                color: $Darkblue;
+                font-weight: 500;
+                &:focus {
+                border-color: $blue;
+                }
+                &::placeholder {
+                color: $gray;
+                }
+            }
+            .add-btn,
+            .delete-btn {
+                display: none; // Hide buttons by default
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                color: black;
+                border: 1px solid black;
+                cursor: pointer;
+                border-radius: 100%;
+                width: 25px;
+                height: 25px;
+                line-height: 25px;
+                text-align: center;
+                background-color: white;
+                &:focus {
+                outline: none;
+                }
+            }
+            // 添加按钮样式
+            .add-btn {
+                right: 30px; 
+                // padding: 0 10px; 
+            }
+            // 删除按钮样式
+            .delete-btn {
+                right: 0; 
+                // padding: 0 10px; 
+            }
+        }    
+    } 
+}

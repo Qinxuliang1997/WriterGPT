@@ -22,14 +22,14 @@ const Title = () => {
 
 
   return (
-    <div className="info">
+    <div className="title">
       {/* <h2>Article Title</h2> */}
       <form className="form" autoComplete="on">
         <div className="fields">
-          <label>Title</label>
+          <label>标题</label>
           <input
             type="textarea" ref={refTitle} autoComplete="on"
-            placeholder="e.g. Electric vehicle, one araising vast market!"
+            placeholder="e.g. 新能源汽车的发展现状与未来展望"
             onChange={e => setPer({ ...perinfo, title: e.target.value})}
           />
         </div>

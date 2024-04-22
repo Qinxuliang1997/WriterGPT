@@ -9,59 +9,59 @@ const Brief = () => {
   const [perinfo, setPer] = useState({
     topic: "",
     primaryKeyword: "",
-    secondaryKeywords: "",
+    // secondaryKeywords: "",
     tone: "",
     view: "",
   });
   const refTopic=useRef();
   const refPrimaryKeywords=useRef();
-  const refSecondaryKeywords=useRef();
+  // const refSecondaryKeywords=useRef();
   const refTone=useRef();
   const refView=useRef();
 
   useEffect(()=>{
     refTopic.current.value=article.topic;
     refPrimaryKeywords.current.value=article.primaryKeyword;
-    refSecondaryKeywords.current.value=article.secondaryKeywords;
+    // refSecondaryKeywords.current.value=article.secondaryKeywords;
     refTone.current.value=article.tone;
     refView.current.value=article.view;
-    dispatch(info({...article,topic:refTopic.current.value,primaryKeyword:refPrimaryKeywords.current.value,secondaryKeywords:refSecondaryKeywords.current.value,tone:refTone.current.value,view:refView.current.value}));
+    dispatch(info({...article,topic:refTopic.current.value,primaryKeyword:refPrimaryKeywords.current.value,tone:refTone.current.value,view:refView.current.value}));
   },[])  
 
   useEffect(() => {
-    dispatch(info({...article,topic:refTopic.current.value,primaryKeyword:refPrimaryKeywords.current.value,secondaryKeywords:refSecondaryKeywords.current.value,tone:refTone.current.value,view:refView.current.value}));
+    dispatch(info({...article,topic:refTopic.current.value,primaryKeyword:refPrimaryKeywords.current.value,tone:refTone.current.value,view:refView.current.value}));
   }, [perinfo.topic, perinfo.primaryKeyword, perinfo.secondaryKeywords, perinfo.tone, perinfo.view]);
 
   return (
-    <div className="info">
+    <div className="brief">
       {/* <h2>Article Description</h2> */}
       <form className="form" autoComplete="on">
         <div className="fields">
-          <label>Topic</label>
+          <label>主题</label>
           <input
             type="textarea" ref={refTopic} autoComplete="on"
-            placeholder="e.g. Story about electric vehicle"
+            placeholder="e.g. 新能源汽车产业发展情况汇报"
             onChange={e => setPer({ ...perinfo, topic: e.target.value})}
           />
         </div>
         <div className="fields">
-          <label>Primary Keyword</label>
+          <label>主关键词</label>
           <input
             type="text" ref={refPrimaryKeywords} autoComplete="on"
-            placeholder="e.g. Electric Vehicle"
+            placeholder="e.g. 新能源汽车"
             onChange={e => setPer({ ...perinfo, primaryKeyword: e.target.value})}
           />
         </div>
-        <div className="fields">
-          <label>Secondary Keywords</label>
+        {/* <div className="fields">
+          <label>副关键词</label>
           <input
             type="text" ref={refSecondaryKeywords} autoComplete="on"
-            placeholder="e.g. Supply Chain"
+            placeholder="e.g. 电池 电驱 电控"
             onChange={e => setPer({ ...perinfo, secondaryKeywords: e.target.value})}
           />
-        </div>
+        </div> */}
         <div className="fields">
-          <label>Tone</label>
+          <label>语气</label>
           <select
             ref={refTone}
             onChange={e => setPer({ ...perinfo, tone: e.target.value})}
@@ -72,7 +72,7 @@ const Brief = () => {
           </select>
         </div>
         <div className="fields">
-          <label>View</label>
+          <label>人称</label>
           <select
             ref={refView}
             onChange={e => setPer({ ...perinfo, view: e.target.value})}

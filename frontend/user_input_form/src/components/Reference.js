@@ -56,21 +56,21 @@ function Reference() {
     };
 
     return (
-        <div className="info">
+        <div className="reference">
             {/* <h2>Reference</h2> */}
             {/* <h3>You can upload your references here</h3> */}
             <form className="uploadForm" encType="multipart/form-data" onSubmit={handleSubmit}>
                 <div className="fields">
-                    <label id="reference_text" htmlFor="text">Text:</label>
+                    <label id="reference_text" htmlFor="text">文本</label>
                     <textarea 
                         ref={textInputRef} 
                         id="text" 
                         name="text" 
-                        placeholder="Text">
+                        placeholder="请你输入参考文本">
                     </textarea>
                 </div>
                 <div className="fields">
-                    <label htmlFor="file"> File (pdf,txt,doc):</label>
+                    <label htmlFor="file"> 文件 （PDF，DOC，TEXT）</label>
                     <input
                         ref={fileInputRef}
                         type="file" 
@@ -80,13 +80,13 @@ function Reference() {
                     />
                 </div>
                 <div className="fields">
-                    <label htmlFor="website">Website URL:</label>
+                    <label htmlFor="website">网页</label>
                     <input
                         url={urlInputRef}
                         type="url" 
                         id="url" 
                         name="url" 
-                        placeholder="Website URL"
+                        placeholder="请你输入网页链接"
                     />
                 </div>
                 {/* <div>
@@ -100,16 +100,16 @@ function Reference() {
                         multiple
                         />
                 </div> */}
-                <button type="submit" id="submitUpload">Upload</button>
+                <button type="submit" id="submitUpload">上传</button>
             </form>
             {/* <div id="uploadStatus" className="text-center mt-4">{uploadStatus}</div> */}
-            <h3>Uploaded Files:</h3>
-            <div id="uploadedFilesList" className="mt-4">
-                <ul id="filesList" className="list-disc list-inside">
+            <h3>已上传的文件</h3>
+            <div className="uploadedFilesList">
+                <ul className="list-inside">
                     {uploadedFiles.map((file, index) => <li key={index}>{file}</li>)}
                 </ul>
             </div>
-            <button onClick={handleDeleteAllFiles}>Delete All Files</button>
+            <button onClick={handleDeleteAllFiles}>清空</button>
         </div>
     );
 }

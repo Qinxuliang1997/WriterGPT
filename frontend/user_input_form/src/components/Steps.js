@@ -6,10 +6,10 @@ const Steps = () => {
   const page=useSelector((e)=>e.page.value)
   return (
     <div className='Steps'>
-      <Step step={1} title={"Brief—"} active={page===0}/>
-      <Step step={2} title={"Reference"} active={page===1}/>
-      <Step step={3} title={"—Title—"} active={page===2}/>
-      <Step step={4} title={"Outline"} active={page>=3}/>
+      <Step step={1} title={"概述"} active={page===0}/>
+      <Step step={2} title={"参考"} active={page===1}/>
+      <Step step={3} title={"标题"} active={page===2}/>
+      <Step step={4} title={"目录"} active={page>=3}/>
     </div>
   )
 }

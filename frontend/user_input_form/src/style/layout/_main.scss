@@ -1,0 +1,29 @@
+main {
+      background-color: #eff5f9;
+      width: 100%;
+      height: calc(100vh - 60px);
+      display: flex;
+      justify-content: center;
+      // margin-top: 20px;
+      flex-direction: column;
+      align-items: center; 
+    }
+.Container {
+    min-width: 900px;
+    height: 82%;
+    width: 50%;
+    background-color: hsl(0, 0%, 100%);
+    margin: auto;
+    padding: 10px 15px 15px 15px;
+    border-radius: 1rem;
+    display: flex;
+    box-shadow: 0 5px 10px #d6d9e6;
+    box-sizing: border-box;
+    }
+    .content {
+    min-width: 55%;
+    margin: auto;
+    height: 100%;
+    position: relative;
+    padding-top: 10px;
+    }

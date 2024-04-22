@@ -1,0 +1,29 @@
+.title {
+    .form {
+      margin-top: 0px;
+      .fields {
+        margin-top: 20px;
+        input,select {
+          width: 100%;
+          font-size: 16px;
+          padding: 10px;
+          border-radius: 8px;
+          border: hsl(229, 24%, 87%) 1px solid;
+          margin-top: 10px;
+          outline: none;
+          color: $Darkblue;
+          font-weight: 500;
+          &:focus {
+            border-color: $blue;
+          }
+          &::placeholder {
+            color: $gray;
+          }
+        }
+        label {
+          color: $Darkblue;
+          font-size: 18px;
+        }
+      }
+    }
+  }

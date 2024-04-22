@@ -1,0 +1,41 @@
+.Steps {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: space-between; /* 修改为space-between以保证元素之间、元素与容器边缘的均匀分布 */
+    align-items: center;
+    padding: 0 40%; /* 左右各添加10%的内边距，确保边缘元素与容器边缘的空隙 */
+  }
+  
+  .Step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .stepNumber {
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
+      text-align: center;
+      background-color: hsl(206, 94%, 87%);
+      color: white;
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: 20px; 
+    }
+    .active {
+      background-color: $blue;
+      color: $Darkblue;
+      border-color: hsl(206, 94%, 87%);
+    }
+    .stepInfo {
+      p {
+        font-weight: 500;
+        font-size: 16px;
+        letter-spacing: 2px;
+        color: rgb(50, 113, 169);
+        margin-bottom: 0;
+      }
+    }
+  }
+  

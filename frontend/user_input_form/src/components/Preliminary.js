@@ -27,9 +27,9 @@ function Preliminary() {
       <Steps/>
       <div className="Container">
         <div className="content">
-        {PageDisplay()}
-        {page !=3 && <NavigationButton/>} 
-        {page ==3 && <GenerateButton/>}
+          {PageDisplay()}
+          {page !=3 && <NavigationButton/>} 
+          {page ==3 && <GenerateButton/>}
         </div>
       </div>
     </main>

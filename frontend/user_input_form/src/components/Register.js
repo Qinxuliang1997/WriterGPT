@@ -26,12 +26,12 @@ export const Register = () => {
         <div className="Auth-form-container">
             <form className="Auth-form" onSubmit={submit}>
                 <div className="Auth-form-content">
-                    <h3 className="Auth-form-title">Register</h3>
+                    <h3 className="Auth-form-title">注册</h3>
                     <div className="form-group mt-3">
-                        <label>Username</label>
+                        <label>用户名</label>
                         <input
                             className="form-control mt-1"
-                            placeholder="Enter Username"
+                            placeholder="输入用户名"
                             name='username'
                             type='text'
                             value={username}
@@ -40,12 +40,12 @@ export const Register = () => {
                         />
                     </div>
                     <div className="form-group mt-3">
-                        <label>Password</label>
+                        <label>密码</label>
                         <input
                             name='password'
                             type="password"
                             className="form-control mt-1"
-                            placeholder="Enter password"
+                            placeholder="输入密码"
                             value={password}
                             required
                             onChange={e => setPassword(e.target.value)}
@@ -53,7 +53,7 @@ export const Register = () => {
                     </div>
                     <div className="d-grid gap-2 mt-3">
                         <button type="submit" className="btn btn-primary">
-                            Submit
+                            提交
                         </button>
                     </div>
                 </div>
