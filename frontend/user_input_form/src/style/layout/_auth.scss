@@ -14,6 +14,15 @@
         padding-bottom: 20px;
         border-radius: 8px;
         background-color: white;
+        @include respond(phone) {
+            width: 80%;
+        }
+        @include respond(tab-land) {
+            width: 70%;
+        }
+        @include respond(big-desktop) {
+            width: 60%;
+        }
         .Auth-form-content {
             padding-left: 12%;
             padding-right: 12%;

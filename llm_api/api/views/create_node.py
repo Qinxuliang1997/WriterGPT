@@ -2,12 +2,20 @@ import os
 from llama_index.core import (download_loader, 
                           SimpleDirectoryReader)
 from llama_index.core import Document
+from dotenv import load_dotenv
 from pathlib import Path
+from llama_index.llms.openai import OpenAI
 # from llama_index.node_parser import SimpleNodeParser
 from llama_index.embeddings.openai import OpenAIEmbedding
 from llama_index.core.node_parser import SentenceSplitter
 from llama_index.core.extractors import TitleExtractor
 from llama_index.core.ingestion import IngestionPipeline, IngestionCache
+from llama_index.core import (VectorStoreIndex, 
+                              Settings, 
+                            )
+
+load_dotenv(override=True)
+Settings.llm = OpenAI(model="gpt-3.5-turbo", temperature=0, max_tokens=300, api_key=os.getenv('OPENAI_API_KEY'))
 
 # create the pipeline with transformations
 pipeline = IngestionPipeline(

@@ -1,0 +1,82 @@
+//////////// Article
+.article-writer {
+    background-color: rgb(250, 250, 250); /* 灰色背景 */
+    // padding: 20px; /* 这个 padding 会成为灰色的 margin 区域 */
+    // width: calc(50% + 40px); /* container宽度 + padding */
+    // margin: auto; /* 居中 outer-container */
+    .ql-toolbar.ql-snow{
+      display: flex;
+      justify-content: center; // 水平居中
+      align-items: center;     // 垂直居中（如果需要）
+      height: 100%;            // 父容器的高度，确保有足够的空间进行垂直居中   
+      border: 1px solid #e6e6e6;
+      // @include respond(phone) {
+      //   flex-direction: column; // Stack toolbar items on small screens
+      // }       
+    }
+    .container {
+      // Adjust the padding and margins as needed
+      padding: 20px;
+      margin: auto;
+      width: 60%;
+      @include respond(phone) {
+        width: 95%; // Full width on smaller screens
+      }
+
+      @include respond(tab-port) {
+        width: 90%; // Slightly smaller width on tablets in portrait
+      }
+
+      @include respond(big-desktop) {
+        width: 85%; // Suitable for landscape tablets
+      }
+
+      .editor-container {
+        // border: 1px solid #ccc; // Color for the border
+        // border-radius: 4px; // Rounded corners
+        // padding: 20px;
+        background-color: #fff; // Assuming a white background
+  
+        h2 {
+          margin-bottom: 20px; // Space between the title and the editor
+        }
+  
+        .editor-wrapper {
+          // border: 1px solid #e2e2e2; // Color for the editor border
+          // min-height: 800px; // Minimum height for the editor
+          .editor.ql-container { 
+            // Styles for the Quill editor
+            height: 90vh;
+            font-size: 25px; 
+            line-height: 3;
+            font-family: "SimSun", sans-serif;
+            .ql-editor{
+              padding: 80px 50px 23px 50px;
+            }
+            // .ql-toolbar {
+            //   border-bottom: 1px solid #e2e2e2; // Border color for the toolbar
+  
+            //   // Inserted CSS code here
+            //   &:first-child {
+            //     display: none !important;
+            //   }
+            }
+            // .ql-container {
+            //   height: 100vh; // Adjust the height as needed
+            //   .ql-editor {
+            //     padding: 20px;
+            //   }
+            // }
+          }
+        }
+    }
+}
+
+.modify-menu {
+    position: fixed;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 5px;
+    z-index: 1000;
+    cursor: pointer;
+}

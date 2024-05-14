@@ -9,17 +9,17 @@ import reportWebVitals from './reportWebVitals';
 import {configureStore} from '@reduxjs/toolkit'
 import { Provider } from 'react-redux';
 import pageReducer  from './features/pages';
-import articleReducer from './features/description'
+import descriptionReducer from './features/description'
 import fileUploadReducer from './features/file';
-import contentReducer from './features/content'
+import articleReducer from './features/article'
 import './interceptors/axios';
 
 const store=configureStore({
   reducer: {
     page: pageReducer,
-    article: articleReducer,
+    description: descriptionReducer,
     fileUpload: fileUploadReducer,
-    content: contentReducer,
+    article: articleReducer,
   },
 })
 

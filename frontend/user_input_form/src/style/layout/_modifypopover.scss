@@ -1,0 +1,37 @@
+.modifypopover {
+    width: 300px;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    z-index: 1000;
+    .modifytext{
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+        background-color: #f8f8f8;
+    }
+    .modifyaction{
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        input{
+            flex: 1;
+            margin-right: 10px;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        button{
+            padding: 5px 10px;
+            cursor: pointer;
+            border: none;
+            background: #007BFF;
+            color: white;
+            border-radius: 4px;
+        }
+    }
+}

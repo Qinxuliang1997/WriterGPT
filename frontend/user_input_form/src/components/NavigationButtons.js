@@ -7,14 +7,14 @@ import { info } from '../features/description'
 
 const NavigationButtons = () => {
   const page=useSelector((e)=>e.page.value);
-  const article=useSelector(e=>e.article.value)
+  const description=useSelector(e=>e.description.value)
   const dispatch=useDispatch();
   const nextClick=()=>{
-    console.log(article)
-    dispatch(info({...article,nextClick:true}));
+    console.log(description)
+    dispatch(info({...description,nextClick:true}));
     if(page===0){
       dispatch(next());
-      dispatch(info({...article,nextClick:false}))
+      dispatch(info({...description,nextClick:false}))
     }
     if(page!==0){
       dispatch(next());

@@ -20,6 +20,8 @@
 @import "./layout/reference";
 @import "./layout/title";
 @import "./layout/outline";
+@import "./layout/article";
+@import "./layout/modifypopover";
 
 @import "./sections/about";
 @import "./sections/contact";
@@ -117,33 +119,33 @@
 //   font-weight: 600;
 //   color: rgb(34, 34, 34);
 // }
-//////////NavigationButton/////
-.btnNavigation {
-  width: 100%;
-  position: absolute;
-  bottom: 15px;
-  display: flex;
-  justify-content: space-between;
-  button {
-    padding: 15px 25px;
-    font-weight: 700;
-    font-size: 16px;
-  }
-  .btn1 {
-    background-color: transparent;
-    border: none;
-    color: $gray;
-  }
-  .btn2 {
-    background-color: #174a89;
-    border: none;
-    color: white;
-    border-radius: 10px;
-  }
-}
-.btnRight{
-  justify-content: right !important;
-}
+// //////////NavigationButton/////
+// .btnNavigation {
+//   width: 100%;
+//   position: absolute;
+//   bottom: 15px;
+//   display: flex;
+//   justify-content: space-between;
+//   button {
+//     padding: 15px 25px;
+//     font-weight: 700;
+//     font-size: 16px;
+//   }
+//   .btn1 {
+//     background-color: transparent;
+//     border: none;
+//     color: $gray;
+//   }
+//   .btn2 {
+//     background-color: #174a89;
+//     border: none;
+//     color: white;
+//     border-radius: 10px;
+//   }
+// }
+// .btnRight{
+//   justify-content: right !important;
+// }
 //////////// Steps section
 // .Steps {
 //   // position: absolute;
@@ -342,62 +344,62 @@
 //     }
 //   }
 // }
-//////////// Article
-.article-writer {
-  background-color: rgb(250, 250, 250); /* 灰色背景 */
-  // padding: 20px; /* 这个 padding 会成为灰色的 margin 区域 */
-  // width: calc(50% + 40px); /* container宽度 + padding */
-  // margin: auto; /* 居中 outer-container */
-  .ql-toolbar.ql-snow{
-    display: flex;
-    justify-content: center; // 水平居中
-    align-items: center;     // 垂直居中（如果需要）
-    height: 100%;            // 父容器的高度，确保有足够的空间进行垂直居中   
-    border: 1px solid #e6e6e6;       
-  }
-  .container {
-    // Adjust the padding and margins as needed
-    padding: 20px;
-    margin: auto;
-    width: 60%; // Adjust the width as necessary
+// //////////// Article
+// .article-writer {
+//   background-color: rgb(250, 250, 250); /* 灰色背景 */
+//   // padding: 20px; /* 这个 padding 会成为灰色的 margin 区域 */
+//   // width: calc(50% + 40px); /* container宽度 + padding */
+//   // margin: auto; /* 居中 outer-container */
+//   .ql-toolbar.ql-snow{
+//     display: flex;
+//     justify-content: center; // 水平居中
+//     align-items: center;     // 垂直居中（如果需要）
+//     height: 100%;            // 父容器的高度，确保有足够的空间进行垂直居中   
+//     border: 1px solid #e6e6e6;       
+//   }
+//   .container {
+//     // Adjust the padding and margins as needed
+//     padding: 20px;
+//     margin: auto;
+//     width: 60%; // Adjust the width as necessary
 
-    .editor-container {
-      // border: 1px solid #ccc; // Color for the border
-      // border-radius: 4px; // Rounded corners
-      // padding: 20px;
-      background-color: #fff; // Assuming a white background
+//     .editor-container {
+//       // border: 1px solid #ccc; // Color for the border
+//       // border-radius: 4px; // Rounded corners
+//       // padding: 20px;
+//       background-color: #fff; // Assuming a white background
 
-      h2 {
-        margin-bottom: 20px; // Space between the title and the editor
-      }
+//       h2 {
+//         margin-bottom: 20px; // Space between the title and the editor
+//       }
 
-      .editor-wrapper {
-        // border: 1px solid #e2e2e2; // Color for the editor border
-        // min-height: 800px; // Minimum height for the editor
-        .editor.ql-container { 
-          // Styles for the Quill editor
-          height: 90vh;
-          font-size: 25px; 
-          line-height: 3;
-          font-family: "SimSun", sans-serif;
-          .ql-editor{
-            padding: 80px 50px 23px 50px;
-          }
-          // .ql-toolbar {
-          //   border-bottom: 1px solid #e2e2e2; // Border color for the toolbar
+//       .editor-wrapper {
+//         // border: 1px solid #e2e2e2; // Color for the editor border
+//         // min-height: 800px; // Minimum height for the editor
+//         .editor.ql-container { 
+//           // Styles for the Quill editor
+//           height: 90vh;
+//           font-size: 25px; 
+//           line-height: 3;
+//           font-family: "SimSun", sans-serif;
+//           .ql-editor{
+//             padding: 80px 50px 23px 50px;
+//           }
+//           // .ql-toolbar {
+//           //   border-bottom: 1px solid #e2e2e2; // Border color for the toolbar
 
-          //   // Inserted CSS code here
-          //   &:first-child {
-          //     display: none !important;
-          //   }
-          }
-          // .ql-container {
-          //   height: 100vh; // Adjust the height as needed
-          //   .ql-editor {
-          //     padding: 20px;
-          //   }
-          // }
-        }
-      }
-    }
-  }
+//           //   // Inserted CSS code here
+//           //   &:first-child {
+//           //     display: none !important;
+//           //   }
+//           }
+//           // .ql-container {
+//           //   height: 100vh; // Adjust the height as needed
+//           //   .ql-editor {
+//           //     padding: 20px;
+//           //   }
+//           // }
+//         }
+//       }
+//     }
+//   }

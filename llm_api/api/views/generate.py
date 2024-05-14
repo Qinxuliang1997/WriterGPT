@@ -1,22 +1,40 @@
 from django.http import JsonResponse
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 import json
-from .ContentAgent import ContentAgent
+from .Writer import Writer
 
 class GenerateView(APIView):
-    # permission_classes = [IsAuthenticated]    
+    permission_classes = (IsAuthenticated, )
     def post(self, request):
         try:
             user = request.user
             data = json.loads(request.body)
-            content_agent = ContentAgent(user)
-            content = content_agent.write(data)
+            writer = Writer(user)
+            title, content = writer.write(data)
+            # title = "标题"
+            # content = {
+            #     '小节 1': {
+            #         'title': "小节标题1",
+            #         'paragraphs': {
+            #             '段落 1': {'content': "这是第一段内容。"},
+            #             '段落 2': {'content': "这是第二段内容。"}
+            #         }
+            #     },
+            #     '小节 2': {
+            #         'title': "小节标题2",
+            #         'paragraphs': {
+            #             '段落 1': {'content': "小节2的第一段内容。"}
+            #         }
+            #     }
+            # }
             return JsonResponse({
                 'status': 'success',
-                'message': 'Article data received successfully.',
+                # 'message': 'Article data received successfully.',
                 # 'Access-Control-Allow-Origin': 'http://localhost:3000',
                 # 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
-                'content': content,
+                'article': {"title": title,
+                            "content": content}
             }, status=200)
         except json.JSONDecodeError:
             # 如果请求体不是有效的 JSON，返回错误

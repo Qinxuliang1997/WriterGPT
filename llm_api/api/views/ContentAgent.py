@@ -1,142 +1,108 @@
 import os
-from django.conf import settings
-from postdata.models import UploadedFile
-from .create_node import *
-from openai import OpenAI
-
-client = OpenAI()
+import logging
+import sys
+from dotenv import load_dotenv
+from typing import Dict, List, Any
 from llama_index.llms.openai import OpenAI
 from llama_index.core import (VectorStoreIndex, 
                               Settings, 
                             )
-import logging
-import sys
-from IPython.display import Markdown, display
+import json
 
-logging.basicConfig(stream=sys.stdout, level=logging.INFO)
+# from IPython.display import Markdown, display
+
+logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 logging.getLogger().addHandler(logging.StreamHandler(stream=sys.stdout))
 
-# llama_index.core.set_global_handler("simple")
-# define LLM
-llm = OpenAI(model="gpt-4", temperature=0, max_tokens=4000, api_key=os.getenv("OPENAI_API_KEY"))
-Settings.llm = llm
-
-# configure service context
-# service_context = ServiceContext.from_defaults(llm=llm)
-# set_global_service_context(service_context)
-
 class ContentAgent:
-    def __init__(self, user):
-        self.user = user
-        self.index = VectorStoreIndex([])
-    
-    def generate_index(self):
-        uploads = UploadedFile.objects.filter(user_name=self.user)
-        url_list = set()
-        text_list = set()
-        for upload in uploads:
-            if upload.text:
-                text_list.add(upload.text)
-            if upload.url:
-                url_list.add(upload.url)
-        user_id = self.user.id
-        files_dir = os.path.join(settings.MEDIA_ROOT, f"user_{user_id}", 'original_files')    
-        print(f'text_list: {" ".join(text_list)}')
-        print(f'url_list: {" ".join(url_list)}')
-        print(f'files_dir: {files_dir}')
+    def __init__(self):
+        load_dotenv(override=True)
+        Settings.llm = OpenAI(model="gpt-3.5-turbo", temperature=0, max_tokens=300, api_key=os.getenv('OPENAI_API_KEY'))
 
-        if url_list:
-            node = create_node_url(list(url_list))
-            self.index.insert_nodes(node)
-        if text_list:
-            node = create_node_text(list(text_list))
-            self.index.insert_nodes(node)
-        if os.listdir(files_dir):
-            node = create_node_dir(files_dir)
-            self.index.insert_nodes(node)
+    def run(self, index, keyword, niche, outline):
+        sections_dict = {}
+        for section_index, section in enumerate(outline, start=1):
+            chinese_index = self.number_to_chinese(section_index)
+            updated_title = f"{chinese_index}、{section.title}"
+            section_dict = {}
+            for paragraph_index, paragraph in enumerate(section.paragraphs, start=1):
+                logging.info(f"Writing section {section.title}, paragraph {paragraph_index}")
+                written_paragraph = self.write_paragraph(
+                    niche=niche,
+                    keyword=keyword,
+                    title=section.title,
+                    paragraph=paragraph,
+                    index=index
+                )
+                section_dict[f"段落 {paragraph_index}"] = {
+                    "content": written_paragraph,
+                    "word_count": len(written_paragraph)
+                }
+                logging.info(f"Done writing paragraph, {len(written_paragraph)} words")
+            sections_dict[f"小节 {section_index}"] = {
+                "title": updated_title,
+                "paragraphs": section_dict
+            }
+        # article_data = self.serialize_dic(section_dict)
+        return sections_dict
 
-    def generate_prompt(self, prompt_details):
-        prompt = '根据以下描述，必须使用中文，撰写一篇文章'
-        if 'topic' in prompt_details and prompt_details['topic']:
-            prompt += f"，关于{prompt_details['topic']}"
-        if 'outline' in prompt_details and prompt_details['outline']:
-            prompt += "，文章应包含以下几个部分： "
-            for idx, point in enumerate(prompt_details['outline'], start=1):
-                prompt += f"{idx}. {point}；"
-        if 'primaryKeyword' in prompt_details and prompt_details['primaryKeyword']:
-            prompt += f"确保文章内容围绕{prompt_details['primaryKeyword']}这一主题"
-        if 'secondaryKeywords' in prompt_details and prompt_details['secondaryKeywords']:
-            prompt += f"，同时涉及{prompt_details['secondaryKeywords']}这些关键词。"
-        else:
-            prompt += "。"
-        if 'view' in prompt_details and prompt_details['view']:
-            prompt += f"文章应该采用{prompt_details['view']}的人称。"
-        if 'tone' in prompt_details and prompt_details['tone']:
-            prompt += f"文章应该采用{prompt_details['tone']}的语气。"
-        prompt += "在文章中嵌入相关的事实材料以支持论述。"
-        return prompt
+    def run_old(self, index, keyword, niche, outline):
+        sections = []
+        for section in outline:
+            paragraphs = []
+            logging.info("Writing section", section.title)
+            for paragraph in section.paragraphs:
+                logging.info(f"Writing paragraph: {paragraph}")
+                written_paragraph = self.write_paragraph(
+                    niche=niche,
+                    keyword=keyword,
+                    title=section.title,
+                    paragraph=paragraph,
+                    index = index,
+                )
+                paragraphs.append(written_paragraph)
+                logging.info(f"Done writing paragraph, {len(written_paragraph)} words")
+            sections.append((section.title, paragraphs))
+        article_text = self.join_article(sections)
+        return article_text
+
+    def write_paragraph(self, niche, keyword, title, paragraph, index):
+        template = ("你是一名资深内容撰稿人，现在需要你根据段落描述完成一篇文章中的一个段落。"
+                    "文章中不得暴露这是人工智能生成的内容。不要添加如“引言”、“结论”等标签。文字使用中文。"
+                    "段落必须非常专业且富有情感。你将获得关于全文的描述（风格、关键词），关于这个部分的描述（标题），以及这段话的描述。"
+                    "根据这些信息撰写段落。")
+        human_template = f"领域: {niche}, 关键词: {keyword}, 段落标题: {title}, 段落描述: {paragraph}"
+        return self.call_llamaindex(template,
+                                    human_template,
+                                    index
+                                    )
     
-    def display_prompt_dict(prompts_dict):
-        for k, p in prompts_dict.items():
-            text_md = f"**Prompt Key**: {k}<br>" f"**Text:** <br>"
-            display(Markdown(text_md))
-            print(p.get_template())
-            display(Markdown("<br><br>"))
-    
-    def write(self, description):
-        print('使用全文书写！')
-        prompt = self.generate_prompt(description)
-        self.generate_index()
-        query_engine = self.index.as_query_engine()
-        prompts_dict = query_engine.get_prompts()
-        self.display_prompt_dict(prompts_dict)
+    def call_llamaindex(self, template, human_template, index):
+        logging.info('start using llamaindex')
+        prompt = template + human_template
+        query_engine = index.as_query_engine()
+        # prompts_dict = query_engine.get_prompts()
+        # self.display_prompt_dict(prompts_dict)
         response = query_engine.query(prompt)
-        article = response.response
-        formated_article = self.format_and_correct_article(article)
-        return formated_article
-        # return ""
+        paragraph_content = response.response
+        return paragraph_content
 
-    def section_write(self, description):
-        print('使用分段落书写！')
-        self.generate_index() 
-        query_engine = self.index.as_chat_engine()  
-        if 'outline' in description and description['outline']:
-            sections_content = []
-            for idx, section in enumerate(description['outline'], start=1):
-                section_prompt = self.generate_section_prompt(section, idx, description)
-                section_response = query_engine.chat(section_prompt)
-                sections_content.append(f"{section_response.response}\n")
-            full_article = "\n".join(sections_content)
-            formated_article = self.format_and_correct_article(full_article)
-            return formated_article
-        else:
-            return self.write(description)
+    def join_article(self, sections: List[Dict[str, str]]) -> str:
+        article = ""
+        for title, paragraphs in sections:
+            article += title
+            article += "\n"
+            article += "\n".join(paragraphs)
+            article += "\n"
+        return article
     
-    def generate_section_prompt(self, section, index, description):
-        prompt = f"根据以下描述，必须使用中文，撰写第 {index} 节的内容，标题为：{section}。"
-        if 'topic' in description and description['topic']:
-            prompt += f" 章节内容应与全文主题“{description['topic']}”相关。"
-        if 'primaryKeyword' in description and description['primaryKeyword']:
-            prompt += f" 请确保章节内容围绕“{description['primaryKeyword']}”这一主题。"
-        if 'secondaryKeywords' in description and description['secondaryKeywords']:
-            prompt += f" 同时请包含如下关键词：{', '.join(description['secondaryKeywords'])}。"
-        if 'view' in description and description['view']:
-            prompt += f" 请使用{description['view']}的人称书写。"
-        if 'tone' in description and description['tone']:
-            prompt += f" 请采用{description['tone']}的语气。"
-        prompt += " 请在章节中嵌入相关的事实材料以支持论述，并使用Markdown格式进行排版，确保结构清晰。"
-        return prompt
-    
+    def serialize_dic(self, data):
+        json_data = json.dumps(data, indent=None, separators=(',', ':'))
+        return json_data
 
-    def format_and_correct_article(self, article):
-        prompt = f"请将以下文章内容转换为正确的 Markdown 格式，并修正任何明显的写作错误，返回修正后的文章，除文章外不要返回其他任何内容：({article})"
-        try:
-            response = client.completions.create(engine="gpt-3.5-turbo-1106",
-            prompt=prompt,
-            temperature=0.5,
-            max_tokens=4000, 
-            api_key=os.getenv("OPENAI_API_KEY"))
-            return response.choices[0].text.strip()
-        except Exception as e:
-            print(f"Error during API call: {e}")
-            return article
+def number_to_chinese(number):
+    chinese_numerals = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十"]
+    if 1 <= number <= 10:
+        return chinese_numerals[number]
+    elif number > 10:
+        return str(number)

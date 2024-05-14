@@ -5,6 +5,15 @@
     justify-content: space-between; /* 修改为space-between以保证元素之间、元素与容器边缘的均匀分布 */
     align-items: center;
     padding: 0 40%; /* 左右各添加10%的内边距，确保边缘元素与容器边缘的空隙 */
+    @include respond(phone) {
+      padding: 0 10%;
+    }
+    @include respond(tab-land) {
+      padding: 0 20%;
+    }
+    @include respond(big-desktop) {
+      padding: 0 40%;
+    }
   }
   
   .Step {

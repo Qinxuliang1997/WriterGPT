@@ -4,12 +4,14 @@ main {
       height: calc(100vh - 60px);
       display: flex;
       justify-content: center;
-      // margin-top: 20px;
       flex-direction: column;
       align-items: center; 
+      @include respond(phone) {
+        height: calc(100vh - 50px);
+      }
     }
 .Container {
-    min-width: 900px;
+    // min-width: 900px;
     height: 82%;
     width: 50%;
     background-color: hsl(0, 0%, 100%);
@@ -19,9 +21,25 @@ main {
     display: flex;
     box-shadow: 0 5px 10px #d6d9e6;
     box-sizing: border-box;
+    
+    @include respond(phone) {
+      min-width: 0;
+      width: 90%;
+      padding: 10px 10px;
+      flex-direction: column;
     }
+  
+    @include respond(tab-land) {
+      width: 80%;
+    }
+  
+    @include respond(big-desktop) {
+      width: 70%;
+    }
+    }
+
     .content {
-    min-width: 55%;
+    width: 80%;
     margin: auto;
     height: 100%;
     position: relative;

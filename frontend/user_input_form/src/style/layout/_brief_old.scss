@@ -1,12 +1,9 @@
 .brief {
     .form {
       margin-top: 0px;
-      .fields-row {
-        display: flex; // 使用 flex 布局使子元素并排
-      }
       .fields {
         margin-top: 20px;
-        input, select{
+        input,select {
           width: 100%;
           font-size: 16px;
           padding: 10px;
@@ -28,15 +25,5 @@
           font-size: 18px;
         }
       }
-      .half {
-        flex: 0 0 50%; // 每个半宽字段占用 50% 的宽度
-        &:first-child {
-          padding-right: 5px; // 添加间距避免挤在一起
-        }
-        &:last-child {
-          padding-left: 5px; // 添加间距避免挤在一起
-        }
-      }
     }
   }
-  

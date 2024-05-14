@@ -12463,12 +12463,9 @@ main {
   font-size: 18px;
 }
 
-.outline {
-  max-height: calc(100% - 80px);
-  overflow-y: auto;
-}
 .outline .outlines-container {
-  margin-top: 20px;
+  max-height: 350px;
+  overflow-y: auto;
 }
 .outline .outlines-container label {
   color: hsl(213, 96%, 18%);
@@ -12481,7 +12478,7 @@ main {
   position: relative;
   margin-top: 10px;
 }
-.outline .outlines-container .outline-section .section-item:hover .section-btn {
+.outline .outlines-container .outline-section .section-item:hover .section-btn, .outline .outlines-container .outline-section .section-item:hover .section-btn {
   display: block;
 }
 .outline .outlines-container .outline-section .section-item input {
@@ -12504,37 +12501,34 @@ main {
   position: relative;
   align-items: center;
 }
-.outline .outlines-container .outline-section .paragraph-container .paragraph-item {
-  position: relative;
-  margin-top: 10px;
-  margin-left: 40px;
-}
-.outline .outlines-container .outline-section .paragraph-container .paragraph-item:hover .paragraph-btn {
+.outline .outlines-container .outline-section .paragraph-container:hover .paragraph-btn {
   display: block;
 }
-.outline .outlines-container .outline-section .paragraph-container .paragraph-item input {
+.outline .outlines-container .outline-section .paragraph-container input {
   width: 100%;
-  font-size: 14px;
+  font-size: 16px;
   padding: 10px;
   border-radius: 8px;
   border: hsl(229, 24%, 87%) 1px solid;
+  margin-top: 10px;
   outline: none;
   color: hsl(213, 96%, 18%);
   font-weight: 500;
 }
-.outline .outlines-container .outline-section .paragraph-container .paragraph-item input:focus {
+.outline .outlines-container .outline-section .paragraph-container input:focus {
   border-color: hsl(243, 100%, 62%);
 }
-.outline .outlines-container .outline-section .paragraph-container .paragraph-item input::placeholder {
+.outline .outlines-container .outline-section .paragraph-container input::placeholder {
   color: hsl(231, 11%, 63%);
 }
 
 .add-btn {
-  right: 20%;
+  right: 60px;
 }
 
 .delete-btn {
-  right: 5%;
+  right: 0;
+  margin-left: 10px;
 }
 
 .add-btn,
@@ -12917,4 +12911,4 @@ main {
   }
 }
 
-/*# sourceMappingURL=style.css.map */
+/*# sourceMappingURL=style.css%E2%80%98%E3%80%81.map */

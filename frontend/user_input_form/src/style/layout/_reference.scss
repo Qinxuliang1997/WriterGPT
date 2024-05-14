@@ -1,5 +1,7 @@
 //////////// Reference
 .reference {
+    max-height: calc(100% - 70px);
+    overflow: auto;
     .uploadForm {
       margin-top: 0px;
       button{

@@ -5,19 +5,19 @@ import { useState, useEffect,useRef} from "react";
 
 const Title = () => {
   const dispatch = useDispatch();
-  const article = useSelector(e => e.article.value);
+  const description = useSelector(e => e.description.value);
   const [perinfo, setPer] = useState({
     title: "",
   });
   const refTitle=useRef();
 
   useEffect(()=>{
-    refTitle.current.value=article.title;
-    dispatch(info({...article,title:refTitle.current.value,}));
+    refTitle.current.value=description.title;
+    dispatch(info({...description,title:refTitle.current.value,}));
   },[])  
 
   useEffect(() => {
-    dispatch(info({...article,title:refTitle.current.value,}));
+    dispatch(info({...description,title:refTitle.current.value,}));
   }, [perinfo.title]);
 
 

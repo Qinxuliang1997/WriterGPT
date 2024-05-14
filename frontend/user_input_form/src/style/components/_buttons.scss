@@ -105,3 +105,31 @@
 .up i {
   color: #272727;
 }
+
+//////////NavigationButton/////
+.btnNavigation {
+  width: 100%;
+  position: absolute;
+  bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  button {
+    padding: 15px 25px;
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .btn1 {
+    background-color: transparent;
+    border: none;
+    color: $gray;
+  }
+  .btn2 {
+    background-color: #174a89;
+    border: none;
+    color: white;
+    border-radius: 10px;
+  }
+}
+.btnRight{
+  justify-content: right !important;
+}

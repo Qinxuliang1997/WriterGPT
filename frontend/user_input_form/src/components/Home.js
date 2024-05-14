@@ -119,7 +119,7 @@ class Portfolio extends React.Component {
                                     </p>
                                     <span className="d-flex mt-3">
                                         <a className="cta-btn cta-btn--resume" href="/login">
-                                            免费使用
+                                            免费开始
                                         </a>
                                     </span>
                                 </div>
@@ -135,9 +135,28 @@ class Portfolio extends React.Component {
                                 <div className="col-lg-4 col-sm-12">
                                     <div className="project-wrapper__text load-hidden">
                                         <h3 className="project-wrapper__text-title">保护你的数据安全</h3>
-                                        <p>对数据进行向量化处理，用完即删</p>
+                                        <p>严格的访问控制策略，上传文件一键清空</p>
                                     </div>
                                 </div>
+                                {/* <div className="col-lg-8 col-sm-12">
+                                    <div class="project-wrapper__image load-hidden">
+                                        <a rel="noreferrer" href="#!" target="_blank">
+                                            <div
+                                                data-tilt
+                                                data-tilt-max="4"
+                                                data-tilt-glare="true"
+                                                data-tilt-max-glare="0.5"
+                                                class="thumbnail rounded js-tilt"
+                                            >
+                                                <img
+                                                alt="Project Image"
+                                                class="img-fluid"
+                                                src="/embeddings.jpg"
+                                                />
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div> */}
                                 <div className="col-lg-4 col-sm-12">
                                     <div className="project-wrapper__text load-hidden">
                                         <h3 className="project-wrapper__text-title">告别假大空</h3>
@@ -147,7 +166,7 @@ class Portfolio extends React.Component {
                                 <div className="col-lg-4 col-sm-12">
                                     <div className="project-wrapper__text load-hidden">
                                         <h3 className="project-wrapper__text-title">好公文是改出来的</h3>
-                                        <p>句子级的AI更改，让你轻松掌控细节</p>
+                                        <p>句子级AI改写，轻松掌控全文细节</p>
                                     </div>
                                 </div>
                             </div>
@@ -157,9 +176,9 @@ class Portfolio extends React.Component {
                 <section id="contact">
                     <div className="container">
                         <h2 className="section-title">联系我们</h2>
-                        <div class="contact-wrapper load-hidden">
-                            <p className="contact-wrapper__text">205989421@qq.com</p>
-                            <a className="cta-btn cta-btn--resume" href="mailto:example@email.com">发送邮件</a>
+                        <div className="contact-wrapper load-hidden">
+                            <p className="contact-wrapper__text">njustqxl@163.com</p>
+                            <a className="cta-btn cta-btn--resume" href="mailto:njustqxl@163.com">发送邮件</a>
                         </div>
                     </div>
                 </section>

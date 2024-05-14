@@ -9,7 +9,7 @@ from .forms import UploadedFileForm
 from .models import UploadedFile
 
 class UploadView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = (IsAuthenticated, )
     def get(self, request, format=None):
         uploads = UploadedFile.objects.filter(user_name=request.user)
         upload_data = get_upload_list(uploads)

@@ -109,7 +109,7 @@ function Reference() {
                     {uploadedFiles.map((file, index) => <li key={index}>{file}</li>)}
                 </ul>
             </div>
-            <button onClick={handleDeleteAllFiles}>清空</button>
+            <button onClick={handleDeleteAllFiles}>清空所有数据</button>
         </div>
     );
 }

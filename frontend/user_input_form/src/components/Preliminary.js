@@ -17,8 +17,6 @@ function Preliminary() {
       case 1:
         return <Reference/>
       case 2:
-        return <Title/>
-      case 3:
         return <Outline/> 
     }
   }
@@ -28,8 +26,8 @@ function Preliminary() {
       <div className="Container">
         <div className="content">
           {PageDisplay()}
-          {page !=3 && <NavigationButton/>} 
-          {page ==3 && <GenerateButton/>}
+          {page !=2 && <NavigationButton/>} 
+          {page ==2 && <GenerateButton/>}
         </div>
       </div>
     </main>
