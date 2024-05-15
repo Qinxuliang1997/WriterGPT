@@ -2,12 +2,12 @@
 .outline {
     max-height: calc(100% - 80px); // Adjust this value to suit your design
     overflow-y: auto; // Adds a vertical scrollbar when needed    
+    label {
+    color: $Darkblue;
+    font-size: 18px;
+    }    
     .outlines-container {
-      margin-top: 20px;
-      label {
-        color: $Darkblue;
-        font-size: 18px;
-      }
+      margin-top: 30px;
       .outline-section {
         margin-top: 20px;
         .section-item {
@@ -42,7 +42,7 @@
                 }     
                 position: relative; 
                 margin-top: 10px;       
-                margin-left: 40px;
+                // margin-left: 40px;
                 input {
                     width: 100%;
                     font-size: 14px;

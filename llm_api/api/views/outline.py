@@ -4,16 +4,16 @@ from rest_framework.permissions import IsAuthenticated
 import json
 from .Writer import Writer
 
-class GenerateView(APIView):
+class OutlineView(APIView):
     permission_classes = (IsAuthenticated, )
     def post(self, request):
         try:
             user = request.user
             data = json.loads(request.body)
             writer = Writer(user)
-            title, content = writer.write(data)
-            # title = "标题"
-            # content = {
+            outline = writer.write_outline(data)
+            print(f'outline here: {outline}')
+            # outline = {
             #     '小节 1': {
             #         'title': "小节标题1",
             #         'paragraphs': {
@@ -26,6 +26,12 @@ class GenerateView(APIView):
             #         'paragraphs': {
             #             '段落 1': {'content': "小节2的第一段内容。"}
             #         }
+            #     },
+            #     '小节 3': {
+            #         'title': "小节标题3",
+            #         'paragraphs': {
+            #             '段落 1': {'content': "小节3的第一段落"}
+            #         }
             #     }
             # }
             return JsonResponse({
@@ -33,8 +39,7 @@ class GenerateView(APIView):
                 # 'message': 'Article data received successfully.',
                 # 'Access-Control-Allow-Origin': 'http://localhost:3000',
                 # 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
-                'article': {"title": title,
-                            "content": content}
+                'article': {"outline": outline}
             }, status=200)
         except json.JSONDecodeError:
             # 如果请求体不是有效的 JSON，返回错误

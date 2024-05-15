@@ -5,7 +5,7 @@ import { fill } from '../features/article';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'; 
 
-const GenerateButton = () => {
+const GenerateArticleButton = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const description = useSelector((e) => e.description.value);
@@ -44,10 +44,10 @@ const GenerateButton = () => {
       {errorMessage && <div className="error-message">{errorMessage}</div>}
       <button className='btn1' onClick={() => dispatch(back())}>上一步</button>
       <button className='btn2' onClick={GenerateClick} disabled={isLoading}>
-        {isLoading ? '正在生成......' : '生成'}
+        {isLoading ? '正在生成......' : '生成全文'}
       </button>
     </div>
   );
 }
 
-export default GenerateButton;
+export default GenerateArticleButton;

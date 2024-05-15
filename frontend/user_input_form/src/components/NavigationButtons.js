@@ -10,15 +10,16 @@ const NavigationButtons = () => {
   const description=useSelector(e=>e.description.value)
   const dispatch=useDispatch();
   const nextClick=()=>{
-    console.log(description)
-    dispatch(info({...description,nextClick:true}));
-    if(page===0){
-      dispatch(next());
-      dispatch(info({...description,nextClick:false}))
-    }
-    if(page!==0){
-      dispatch(next());
-    }
+    console.log(description);
+    dispatch(next());
+    // // dispatch(info({...description,nextClick:true}));
+    // if(page===2){
+    //   dispatch(next());
+    //   // dispatch(info({...description,nextClick:false}))
+    // }
+    // if(page!==2){
+    //   dispatch(next());
+    // }
   }
   return (
     <div className={page===0?'btnNavigation btnRight':'btnNavigation'}>

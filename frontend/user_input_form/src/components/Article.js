@@ -118,10 +118,10 @@ function Article() {
                 </span>
 
                 {/* <!-- Blocks --> */}
-                <span className="ql-formats">
+                {/* <span className="ql-formats">
                     <button className="ql-blockquote"></button>
                     <button className="ql-code-block"></button>
-                </span>
+                </span> */}
 
                 {/* <!-- Lists --> */}
                 <span className="ql-formats">
@@ -131,10 +131,10 @@ function Article() {
                 </span>
 
                 {/* <!-- Indentation --> */}
-                <span className="ql-formats">
+                {/* <span className="ql-formats">
                     <button className="ql-indent" value="-1"></button>
                     <button className="ql-indent" value="+1"></button>
-                </span>
+                </span> */}
 
                 {/* <!-- Headers --> */}
                 <span className="ql-formats">
@@ -156,10 +156,10 @@ function Article() {
                 </span>
 
                 {/* <!-- Font and Alignment --> */}
-                <span className="ql-formats">
+                {/* <span className="ql-formats">
                     <select className="ql-font"></select>
                     <select className="ql-align"></select>
-                </span>
+                </span> */}
 
                 {/* <!-- Clean Formatting --> */}
                 <span className="ql-formats">

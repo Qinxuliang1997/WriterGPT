@@ -12467,12 +12467,12 @@ main {
   max-height: calc(100% - 80px);
   overflow-y: auto;
 }
-.outline .outlines-container {
-  margin-top: 20px;
-}
-.outline .outlines-container label {
+.outline label {
   color: hsl(213, 96%, 18%);
   font-size: 18px;
+}
+.outline .outlines-container {
+  margin-top: 30px;
 }
 .outline .outlines-container .outline-section {
   margin-top: 20px;
@@ -12507,7 +12507,6 @@ main {
 .outline .outlines-container .outline-section .paragraph-container .paragraph-item {
   position: relative;
   margin-top: 10px;
-  margin-left: 40px;
 }
 .outline .outlines-container .outline-section .paragraph-container .paragraph-item:hover .paragraph-btn {
   display: block;

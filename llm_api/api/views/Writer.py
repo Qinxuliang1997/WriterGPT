@@ -5,8 +5,7 @@ from .create_node import *
 import logging
 from .StructureAgent import StructureAgent
 from .ContentAgent import ContentAgent
-from llama_index.core import VectorStoreIndex
-
+from .ReferenceAgent import ReferenceAgent
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s - %(levelname)s - %(message)s',
                     handlers=[
@@ -15,37 +14,23 @@ logging.basicConfig(level=logging.DEBUG,
                     ])
 
 class Writer:
-    def __init__(self, user):
-        self.user = user
-
-    def write(self, request_data):
-        logging.info("writting start!")
-        # 1 prepare
-        index = self.generate_index()
+    def __init__(self,user):
+        self.index = self.generate_index(user)
         logging.info("index finished!")
-        # self.references_understanding()
-        # 2 generate detailed outline
+
+    def write_outline(self, request_data):
         outline = self.generate_detailed_outline(request_data)
-        logging.info(f"outline:{outline}")
-        # 3 generate content
-        content = self.generate_content(request_data, outline, index)
+        logging.info(f"outline:{outline}")  
+        return outline
+    
+    def write_content(self,request_data):
+        logging.info("writting content start!")
+        content = self.generate_content(request_data)
         title = request_data['title']
         return title, content
-    
-    # def write(self, description):
-    #     print('使用全文书写！')
-    #     prompt = self.generate_prompt(description)
-    #     self.generate_index()
-    #     query_engine = self.index.as_query_engine()
-    #     prompts_dict = query_engine.get_prompts()
-    #     self.display_prompt_dict(prompts_dict)
-    #     response = query_engine.query(prompt)
-    #     article = response.response
-    #     formated_article = self.format_and_correct_article(article)
-    #     return formated_article
 
-    def generate_index(self):
-        uploads = UploadedFile.objects.filter(user_name=self.user)
+    def generate_index(self, user):
+        uploads = UploadedFile.objects.filter(user_name=user)
         url_list = set()
         text_list = set()
         for upload in uploads:
@@ -53,34 +38,34 @@ class Writer:
                 text_list.add(upload.text)
             if upload.url:
                 url_list.add(upload.url)
-        user_id = self.user.id
+        user_id = user.id
         files_dir = os.path.join(settings.MEDIA_ROOT, f"user_{user_id}", 'original_files')    
         logging.info(f'text_list: {" ".join(text_list)}')
         logging.info(f'url_list: {" ".join(url_list)}')
         logging.info(f'files_dir: {files_dir}')
-        index = VectorStoreIndex([])
-        if url_list:
-            node = create_node_url(list(url_list))
-            index.insert_nodes(node)
-        if text_list:
-            node = create_node_text(list(text_list))
-            self.index.insert_nodes(node)
-        if os.listdir(files_dir):
-            node = create_node_dir(files_dir)
-            index.insert_nodes(node)
+        RA = ReferenceAgent()
+        index = RA.indexing(url_list, text_list, files_dir)
         return index
 
     def generate_detailed_outline(self, request_data):
-        SA = StructureAgent(request_data['outline']) if request_data['outline'] else StructureAgent(None)
-        detailed_outline = SA.run(keyword=request_data['primaryKeyword'], niche=request_data['style'], length=int(request_data['length']))
+        outline = request_data.get('outline', '')
+        SA = StructureAgent(outline) if outline else StructureAgent(None)
+        detailed_outline = SA.run(title=request_data.get('title', ''),
+                                  content_requirement=request_data.get('content_requirent', ''),
+                                  niche=request_data.get('style', ''),
+                                  length=request_data.get('length', ''))
         logging.info('detailed outline finished!')
         return detailed_outline
     
-    def generate_content(self, request_data, outline, index):
+    def generate_content(self, request_data):
         CA = ContentAgent()
-        article = CA.run(index, keyword=request_data['primaryKeyword'], niche=request_data['style'],outline=outline)
+        article = CA.run(self.index, 
+                         content_requirement=request_data.get('content_requirent', ''), 
+                         niche=request_data.get('style', ''),
+                         outline=request_data.get('outline', ''))
+        logging.info('article content finished!')
         return article
-    
+        
     # def generate_prompt(self, prompt_details):
     #     print(prompt_details)
     #     prompt = '根据以下描述，必须使用中文，撰写一篇文章'

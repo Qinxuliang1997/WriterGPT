@@ -5,7 +5,8 @@ import Reference from "./Reference"
 import Title from "./Title"
 import Outline from "./Outline"
 import { useSelector } from "react-redux";
-import GenerateButton from "./GenerateButton";
+import GenerateArticleButton from "./GenerateArticleButton";
+import GenerateOutlineButton from "./GenerateOutlineButton";
 
 function Preliminary() {
   
@@ -26,8 +27,9 @@ function Preliminary() {
       <div className="Container">
         <div className="content">
           {PageDisplay()}
-          {page !=2 && <NavigationButton/>} 
-          {page ==2 && <GenerateButton/>}
+          {page ==0 && <NavigationButton/>} 
+          {page == 1 && <GenerateOutlineButton/>}
+          {page ==2 && <GenerateArticleButton/>}
         </div>
       </div>
     </main>

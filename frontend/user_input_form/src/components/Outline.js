@@ -63,8 +63,8 @@ const Outline = () => {
 
   return (
     <div className="outline">
+      <label>目录</label>
       <div className="outlines-container">
-        {/* <label>目录</label> */}
         {outlines.map((outline, sectionIndex) => (
           <div key={sectionIndex} className="outline-section">
             <div className="section-item">

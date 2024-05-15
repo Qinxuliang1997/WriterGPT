@@ -8,7 +8,7 @@ const Brief = () => {
   const description = useSelector(e => e.description.value);
   const [perinfo, setPer] = useState({
     title: "",
-    topic: "",
+    content_requirement: "",
     // primaryKeyword: "",
     // secondaryKeywords: "",
     // tone: "",
@@ -16,7 +16,7 @@ const Brief = () => {
     length: "",
   });
   const refTitle=useRef();
-  const refTopic=useRef();
+  const refContentRequirement=useRef();
   // const refPrimaryKeywords=useRef();
   // const refSecondaryKeywords=useRef();
   // const refTone=useRef();
@@ -25,18 +25,18 @@ const Brief = () => {
 
   useEffect(()=>{
     refTitle.current.value=description.title;
-    refTopic.current.value=description.topic;
+    refContentRequirement.current.value=description.content_requirement;
     // refPrimaryKeywords.current.value=description.primaryKeyword;
     // refSecondaryKeywords.current.value=description.secondaryKeywords;
     // refTone.current.value=description.tone;
     refStyle.current.value=description.style;
     refLength.current.value=description.length;
-    dispatch(info({...description,title:refTitle.current.value,topic:refTopic.current.value,style:refStyle.current.value,length:refLength.current.value}));
+    dispatch(info({...description,title:refTitle.current.value,content_requirement:refContentRequirement.current.value,style:refStyle.current.value,length:refLength.current.value}));
   },[])  
 
   useEffect(() => {
-    dispatch(info({...description,title:refTitle.current.value,topic:refTopic.current.value,style:refStyle.current.value,length:refLength.current.value}));
-  }, [perinfo.title, perinfo.topic, perinfo.primaryKeyword, perinfo.secondaryKeywords, perinfo.style, perinfo.length]);
+    dispatch(info({...description,title:refTitle.current.value,content_requirement:refContentRequirement.current.value,style:refStyle.current.value,length:refLength.current.value}));
+  }, [perinfo.title, perinfo.content_requirement, perinfo.primaryKeyword, perinfo.secondaryKeywords, perinfo.style, perinfo.length]);
 
   return (
     <div className="brief">
@@ -53,9 +53,9 @@ const Brief = () => {
         <div className="fields">
           <label>内容要求</label>
           <input
-            type="textarea" ref={refTopic} autoComplete="on"
+            type="textarea" ref={refContentRequirement} autoComplete="on"
             // placeholder="e.g. 新能源汽车产业发展情况汇报"
-            onChange={e => setPer({ ...perinfo, topic: e.target.value})}
+            onChange={e => setPer({ ...perinfo, content_requirement: e.target.value})}
           />
         </div>      
         {/* <div className="fields-row"> */}
