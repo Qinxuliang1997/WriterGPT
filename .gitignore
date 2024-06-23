@@ -29,3 +29,4 @@ db.sqlite3-journal
 media/
 Multi_step_form-main/
 simplefolio-master/
+wandb/

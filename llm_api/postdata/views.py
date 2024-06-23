@@ -12,7 +12,7 @@ class UploadView(APIView):
     permission_classes = (IsAuthenticated, )
     def get(self, request, format=None):
         uploads = UploadedFile.objects.filter(user_name=request.user)
-        upload_data = get_upload_list(uploads)
+        upload_data = self.get_upload_list(uploads)
         return JsonResponse({'uploaded_files': upload_data}, status=status.HTTP_200_OK)     
 
     def post(self, request, format=None):
@@ -23,7 +23,7 @@ class UploadView(APIView):
             uploaded_file_instance.save()
             
             uploads = UploadedFile.objects.filter(user_name=request.user)
-            uploaded_files = get_upload_list(uploads)
+            uploaded_files = self.get_upload_list(uploads)
             return JsonResponse({'uploaded_files': uploaded_files}, status=status.HTTP_201_CREATED)
         else:
             return JsonResponse({'error': '[error]'}, status=status.HTTP_400_BAD_REQUEST)
@@ -38,10 +38,13 @@ class UploadView(APIView):
                 if os.path.isfile(file_path):
                     os.unlink(file_path)  # 删除文件
             except Exception as e:
-                print(f'Failed to delete {file_path}. Reason: {e}')        
+                print(f'Failed to delete {file_path}. Reason: {e}')    
+        files_dir = os.path.join(settings.MEDIA_ROOT, f"user_{request.user.id}", 'indexed_files')  
+        if os.path.exists(files_dir):
+            shutil.rmtree(files_dir)
         return JsonResponse({'message': 'completed!'}, status=status.HTTP_200_OK)
 
-def get_upload_list(uploads):
+    def get_upload_list(self, uploads):
         upload_data = set()
         for upload in uploads:
             if upload.text:
@@ -50,9 +53,4 @@ def get_upload_list(uploads):
                 upload_data.add(upload.file_name)
             if upload.url:
                 upload_data.add(upload.url)
-        # response_data = [{
-        #     'file_name': upload.file_name,  # 获取文件名
-        #     'text_preview': upload.text[:10],  # 获取文本的前10个字符
-        #     'url': upload.url  # 获取URL
-        # } for upload in uploads]
         return list(upload_data)

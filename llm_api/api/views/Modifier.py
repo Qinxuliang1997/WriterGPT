@@ -8,16 +8,7 @@ from llama_index.core import Settings
 import os
 from llama_index.core.llms import ChatMessage
 
-# from llama_index.core import VectorStoreIndex
-
-# logging.basicConfig(level=logging.DEBUG,
-#                     format='%(asctime)s - %(levelname)s - %(message)s',
-#                     handlers=[
-#                         logging.FileHandler("debug_info_error.log"),
-#                         logging.StreamHandler()
-#                     ])
-
-class ModifyAgent:
+class Modifier:
     def __init__(self):
         load_dotenv(override=True)
         self.llm = OpenAI(model="gpt-3.5-turbo", temperature=0, max_tokens=2000, api_key=os.getenv('OPENAI_API_KEY'))

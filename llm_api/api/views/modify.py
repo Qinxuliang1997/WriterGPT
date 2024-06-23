@@ -1,16 +1,17 @@
 from django.http import JsonResponse
 from rest_framework.views import APIView
 import json
-from .ModifyAgent import ModifyAgent
+from rest_framework.permissions import IsAuthenticated
+from .Modifier import Modifier
 
 class ModifyView(APIView):
-    # permission_classes = [IsAuthenticated]    
+    permission_classes = (IsAuthenticated, )
     def post(self, request):
         try:
             user = request.user
             data = json.loads(request.body)
-            modify_agent = ModifyAgent()
-            content = modify_agent.modify(data)
+            modifier = Modifier()
+            content = modifier.modify(data)
             return JsonResponse({
                 'status': 'success',
                 'message': 'Article data received successfully.',

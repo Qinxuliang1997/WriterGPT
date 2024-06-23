@@ -1,35 +1,45 @@
 import os
+import asyncio
+import logging
+from dotenv import load_dotenv
+from llama_index.core import Settings
+from llama_index.llms.openai import OpenAI
 from django.conf import settings
 from postdata.models import UploadedFile
-from .create_node import *
-import logging
 from .StructureAgent import StructureAgent
 from .ContentAgent import ContentAgent
 from .ReferenceAgent import ReferenceAgent
-logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s - %(levelname)s - %(message)s',
-                    handlers=[
-                        logging.FileHandler("debug_info_error.log"),
-                        logging.StreamHandler()
-                    ])
+
+# basic config
+load_dotenv(override=True)
+Settings.llm = OpenAI(model="gpt-3.5-turbo", temperature=0, max_tokens=300, api_key=os.getenv('OPENAI_API_KEY'))
+# logging.basicConfig(level=logging.DEBUG,
+#                     format='%(asctime)s - %(levelname)s - %(message)s',
+#                     handlers=[
+#                         logging.FileHandler("debug_info_error.log"),
+#                         logging.StreamHandler()
+#                     ])
 
 class Writer:
-    def __init__(self,user):
-        self.index = self.generate_index(user)
-        logging.info("index finished!")
+    def __init__(self, user):
+        persist_dir = os.path.join(settings.MEDIA_ROOT, f"user_{user.id}", 'indexed_files')    
+        self.use_reference = self.check_whether_reference(user)
+        if self.use_reference:
+            self.index, self.extra_info_dict = self.get_index(user, persist_dir)
+            for file_base, info in self.extra_info_dict.items():
+                print(info['summary'])
+            # if not os.path.exists(persist_dir):
+            #     self.index = self.generate_index(user, persist_dir)
+            # else:
+            #     self.index = self.load_index(persist_dir)
 
-    def write_outline(self, request_data):
-        outline = self.generate_detailed_outline(request_data)
-        logging.info(f"outline:{outline}")  
-        return outline
+    def check_whether_reference(self, user):
+        uploads = UploadedFile.objects.filter(user_name=user)
+        count = uploads.count()
+        print(f'reference count {count}')
+        return False if count==0 else True
     
-    def write_content(self,request_data):
-        logging.info("writting content start!")
-        content = self.generate_content(request_data)
-        title = request_data['title']
-        return title, content
-
-    def generate_index(self, user):
+    def get_index(self, user, persist_dir):
         uploads = UploadedFile.objects.filter(user_name=user)
         url_list = set()
         text_list = set()
@@ -43,29 +53,53 @@ class Writer:
         logging.info(f'text_list: {" ".join(text_list)}')
         logging.info(f'url_list: {" ".join(url_list)}')
         logging.info(f'files_dir: {files_dir}')
-        RA = ReferenceAgent()
-        index = RA.indexing(url_list, text_list, files_dir)
-        return index
+        if (not url_list) and (not text_list) and (not any(os.listdir(files_dir))):
+            raise('loading references wrong!')
+        RA = ReferenceAgent(persist_dir)
+        index, extra_info_dict = asyncio.run(RA.index(url_list, text_list, files_dir))
+        return index, extra_info_dict
+    
+    def write_outline(self, request_data):
+        outline = self.generate_outline(request_data)
+        logging.info(f"outline:{outline}")  
+        return outline      
+    
+    def write_content(self,request_data):
+        logging.info("writting content start!")
+        content = self.generate_content(request_data)
+        title = request_data['title']
+        return title, content
 
-    def generate_detailed_outline(self, request_data):
-        outline = request_data.get('outline', '')
-        SA = StructureAgent(outline) if outline else StructureAgent(None)
-        detailed_outline = SA.run(title=request_data.get('title', ''),
-                                  content_requirement=request_data.get('content_requirent', ''),
-                                  niche=request_data.get('style', ''),
-                                  length=request_data.get('length', ''))
-        logging.info('detailed outline finished!')
+    def generate_outline(self, request_data):
+        SA = StructureAgent()       
+        if self.use_reference:
+            detailed_outline = SA.run_with_reference(title=request_data.get('title', ''),
+                content_requirement=request_data.get('content_requirent', ''),
+                niche=request_data.get('style', ''),
+                length=request_data.get('length', ''),
+                index=self.index,
+                doc_info=self.extra_info_dict)
+        else:
+            detailed_outline = SA.run_without_reference(title=request_data.get('title', ''),
+                content_requirement=request_data.get('content_requirent', ''),
+                niche=request_data.get('style', ''),
+                length=request_data.get('length', ''))
+            logging.info('detailed outline finished!')
         return detailed_outline
     
     def generate_content(self, request_data):
         CA = ContentAgent()
-        article = CA.run(self.index, 
-                         content_requirement=request_data.get('content_requirent', ''), 
-                         niche=request_data.get('style', ''),
-                         outline=request_data.get('outline', ''))
-        logging.info('article content finished!')
+        if self.use_reference:
+            article = CA.run_reference(self.index, 
+                                        content_requirement=request_data.get('content_requirent', ''), 
+                                        niche=request_data.get('style', ''),
+                                        outline=request_data.get('outline', ''))
+        else:
+            article = CA.run(content_requirement=request_data.get('content_requirent', ''), 
+                            niche=request_data.get('style', ''),
+                            outline=request_data.get('outline', ''))
         return article
-        
+    
     # def generate_prompt(self, prompt_details):
     #     print(prompt_details)
     #     prompt = '根据以下描述，必须使用中文，撰写一篇文章'

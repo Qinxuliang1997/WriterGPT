@@ -12,7 +12,6 @@ class OutlineView(APIView):
             data = json.loads(request.body)
             writer = Writer(user)
             outline = writer.write_outline(data)
-            print(f'outline here: {outline}')
             # outline = {
             #     '小节 1': {
             #         'title': "小节标题1",
