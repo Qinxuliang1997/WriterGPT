@@ -25,7 +25,7 @@ function Reference() {
                 // 上传成功后清空输入内容
                 textInputRef.current.value = "";  // 清空文本输入域
                 fileInputRef.current.value = "";  // 清空文件输入域
-                urlInputRef.current.value= "";
+                // urlInputRef.current.value= "";
             } else {
                 // 处理非 200 响应状态码
                 setUploadStatus('Upload failed, please try again.');
@@ -40,7 +40,7 @@ function Reference() {
         try {
             await axios.delete('http://localhost:8000/postdata/upload/');
             setUploadedFiles([]);
-            alert('All files deleted');
+            alert('参考资料已清空！');
         } catch (error) {
             console.log('Error:', error);
         }
@@ -66,7 +66,8 @@ function Reference() {
                         ref={textInputRef} 
                         id="text" 
                         name="text" 
-                        placeholder="请你输入参考文本">
+                        // placeholder="请你输入参考文本"
+                        >
                     </textarea>
                 </div>
                 <div className="fields">
@@ -86,7 +87,7 @@ function Reference() {
                         type="url" 
                         id="url" 
                         name="url" 
-                        placeholder="请你输入网页链接"
+                        // placeholder="请你输入网页链接"
                     />
                 </div>
                 {/* <div>
@@ -109,7 +110,7 @@ function Reference() {
                     {uploadedFiles.map((file, index) => <li key={index}>{file}</li>)}
                 </ul>
             </div>
-            <button onClick={handleDeleteAllFiles}>清空所有数据</button>
+            <button onClick={handleDeleteAllFiles}>清空</button>
         </div>
     );
 }

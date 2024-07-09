@@ -10,7 +10,7 @@ class ModifyView(APIView):
         try:
             user = request.user
             data = json.loads(request.body)
-            modifier = Modifier()
+            modifier = Modifier(user)
             content = modifier.modify(data)
             return JsonResponse({
                 'status': 'success',

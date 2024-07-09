@@ -1,9 +1,6 @@
 import os
 import asyncio
 import logging
-from dotenv import load_dotenv
-from llama_index.core import Settings
-from llama_index.llms.openai import OpenAI
 from django.conf import settings
 from postdata.models import UploadedFile
 from .StructureAgent import StructureAgent
@@ -11,8 +8,6 @@ from .ContentAgent import ContentAgent
 from .ReferenceAgent import ReferenceAgent
 
 # basic config
-load_dotenv(override=True)
-Settings.llm = OpenAI(model="gpt-3.5-turbo", temperature=0, max_tokens=300, api_key=os.getenv('OPENAI_API_KEY'))
 # logging.basicConfig(level=logging.DEBUG,
 #                     format='%(asctime)s - %(levelname)s - %(message)s',
 #                     handlers=[
@@ -26,8 +21,8 @@ class Writer:
         self.use_reference = self.check_whether_reference(user)
         if self.use_reference:
             self.index, self.extra_info_dict = self.get_index(user, persist_dir)
-            for file_base, info in self.extra_info_dict.items():
-                print(info['summary'])
+            # for file_base, info in self.extra_info_dict.items():
+            #     print(info['summary'])
             # if not os.path.exists(persist_dir):
             #     self.index = self.generate_index(user, persist_dir)
             # else:
@@ -74,14 +69,14 @@ class Writer:
         SA = StructureAgent()       
         if self.use_reference:
             detailed_outline = SA.run_with_reference(title=request_data.get('title', ''),
-                content_requirement=request_data.get('content_requirent', ''),
+                content_requirement=request_data.get('content_requirement', ''),
                 niche=request_data.get('style', ''),
                 length=request_data.get('length', ''),
                 index=self.index,
                 doc_info=self.extra_info_dict)
         else:
             detailed_outline = SA.run_without_reference(title=request_data.get('title', ''),
-                content_requirement=request_data.get('content_requirent', ''),
+                content_requirement=request_data.get('content_requirement', ''),
                 niche=request_data.get('style', ''),
                 length=request_data.get('length', ''))
             logging.info('detailed outline finished!')
@@ -90,14 +85,16 @@ class Writer:
     def generate_content(self, request_data):
         CA = ContentAgent()
         if self.use_reference:
-            article = CA.run_reference(self.index, 
-                                        content_requirement=request_data.get('content_requirent', ''), 
-                                        niche=request_data.get('style', ''),
-                                        outline=request_data.get('outline', ''))
+            article = CA.run_reference_section(index = self.index, 
+                title = request_data.get('title', ''),
+                content_requirement=request_data.get('content_requirent', ''), 
+                niche=request_data.get('style', ''),
+                outline=request_data.get('outline', ''))
         else:
-            article = CA.run(content_requirement=request_data.get('content_requirent', ''), 
-                            niche=request_data.get('style', ''),
-                            outline=request_data.get('outline', ''))
+            article = CA.run_section(title = request_data.get('title', ''),
+                content_requirement=request_data.get('content_requirent', ''), 
+                niche=request_data.get('style', ''),
+                outline=request_data.get('outline', ''))
         return article
     
     # def generate_prompt(self, prompt_details):

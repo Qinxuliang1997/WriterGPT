@@ -1,10 +1,10 @@
 import axios from "axios";
-import {Navigate} from "react-router-dom";
-import {useState} from "react";
+import { useState } from "react";
 
 export const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
     const submit = async e => {
         e.preventDefault();
@@ -12,31 +12,42 @@ export const Login = () => {
         const user = {
             username: username,
             password: password
-          };
+        };
 
-        const {data} = await axios.post('http://localhost:8000/token/', user ,{headers: {
-            'Content-Type': 'application/json'
-        }}, {withCredentials: true});
+        try {
+            const { data } = await axios.post('http://localhost:8000/token/', user, {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                withCredentials: true
+            });
 
-        console.log(data)
-        localStorage.clear();
-        localStorage.setItem('access_token', data.access);
-        localStorage.setItem('refresh_token', data.refresh);
-        localStorage.setItem('user_name', username)
-        axios.defaults.headers.common['Authorization'] = `Bearer ${data['access']}`;
-        window.location.href = '/preliminary'
-    }
+            localStorage.clear();
+            localStorage.setItem('access_token', data.access);
+            localStorage.setItem('refresh_token', data.refresh);
+            localStorage.setItem('user_name', username);
+            axios.defaults.headers.common['Authorization'] = `Bearer ${data.access}`;
+            window.location.href = '/preliminary';
+        } catch (error) {
+            if (error.response && error.response.status === 401) {
+                setError('用户名或密码错误');
+            } else {
+                setError('用户名或密码错误');
+            }
+        }
+    };
 
-    return(
+    return (
         <div className="Auth-form-container">
             <form className="Auth-form" onSubmit={submit}>
                 <div className="Auth-form-content">
                     <h3 className="Auth-form-title">登录</h3>
+                    {error && <div className="alert alert-danger" role="alert">{error}</div>}
                     <div className="form-group mt-3">
                         <label>用户名</label>
                         <input
                             className="form-control mt-1"
-                            placeholder="输入用户名"
+                            // placeholder="输入用户名"
                             name='username'
                             type='text'
                             value={username}
@@ -50,7 +61,7 @@ export const Login = () => {
                             name='password'
                             type="password"
                             className="form-control mt-1"
-                            placeholder="输入密码"
+                            // placeholder="输入密码"
                             value={password}
                             required
                             onChange={e => setPassword(e.target.value)}
@@ -64,7 +75,7 @@ export const Login = () => {
                 </div>
             </form>
         </div>
-    )
-}
+    );
+};
 
-export default Login
+export default Login;

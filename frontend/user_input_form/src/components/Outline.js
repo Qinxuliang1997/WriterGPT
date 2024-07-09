@@ -5,24 +5,23 @@ import { info } from "../features/description";
 const Outline = () => {
   const dispatch = useDispatch();
   const description = useSelector((e) => e.description.value);
-  
-  // 初始化 State，适应新的数据结构
   const [outlines, setOutlines] = useState(() => {
     if (description && description.outline) {
       return Object.entries(description.outline).map(([section, details]) => ({
         title: details.title,
+        length: details.length,
         paragraphs: Object.entries(details.paragraphs).map(([_, p]) => p.content)
       }));
     }
-    return [{ title: "", paragraphs: [""] }];  // 默认值为一个空的小节和段落
+    return [{ title: "", length: "", paragraphs: [""] }];
   });
 
   useEffect(() => {
-    // 更新 Redux Store
     let outlineStructure = {};
     outlines.forEach((outline, index) => {
       outlineStructure[`小节 ${index + 1}`] = {
         title: outline.title,
+        length: outline.length,
         paragraphs: outline.paragraphs.reduce((acc, content, idx) => {
           acc[`段落 ${idx + 1}`] = { content };
           return acc;
@@ -40,7 +39,7 @@ const Outline = () => {
 
   const addOutline = (index) => {
     const newOutlines = [...outlines];
-    newOutlines.splice(index + 1, 0, { title: "", paragraphs: [""] });
+    newOutlines.splice(index + 1, 0, { title: "", length: "", paragraphs: [""] });
     setOutlines(newOutlines);
   };
 
@@ -70,10 +69,11 @@ const Outline = () => {
             <div className="section-item">
                 <input
                 type="text"
-                value={outline.title}
+                value={`${sectionIndex + 1} ${outline.title}`}
                 onChange={(e) => {
                     const newOutlines = [...outlines];
-                    newOutlines[sectionIndex].title = e.target.value;
+                    const newTitle = e.target.value.replace(`${sectionIndex + 1} `, '');
+                    newOutlines[sectionIndex].title = newTitle;
                     setOutlines(newOutlines);
                 }}
                 placeholder="编辑小节标题"
@@ -88,8 +88,13 @@ const Outline = () => {
                 <div className="paragraph-item">
                     <input
                     type="text"
-                    value={content}
-                    onChange={(e) => handleChange(sectionIndex, paragraphIndex, e.target.value)}
+                    value={`${sectionIndex + 1}.${paragraphIndex + 1} ${content}`}
+                    onChange={(e) => {
+                        const newOutlines = [...outlines];
+                        const newContent = e.target.value.replace(`${sectionIndex + 1}.${paragraphIndex + 1} `, '');
+                        newOutlines[sectionIndex].paragraphs[paragraphIndex] = newContent;
+                        setOutlines(newOutlines);
+                    }}
                     placeholder="编辑段落内容"
                     />
                     <button className="add-btn paragraph-btn" onClick={() => addParagraph(sectionIndex)}>➕</button>

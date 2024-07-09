@@ -45,15 +45,15 @@ const Brief = () => {
       <div className="fields">
           <label>标题</label>
           <input
-            type="textarea" ref={refTitle} autoComplete="on"
+            type="textarea" ref={refTitle} autoComplete="on" required
             // placeholder="e.g. 新能源汽车的发展现状与未来展望"
             onChange={e => setPer({ ...perinfo, title: e.target.value})}
           />
         </div>
         <div className="fields">
-          <label>内容要求</label>
+          <label>关键词</label>
           <input
-            type="textarea" ref={refContentRequirement} autoComplete="on"
+            type="textarea" ref={refContentRequirement} autoComplete="on" required
             // placeholder="e.g. 新能源汽车产业发展情况汇报"
             onChange={e => setPer({ ...perinfo, content_requirement: e.target.value})}
           />
@@ -64,14 +64,13 @@ const Brief = () => {
               <select
                 ref={refStyle}
                 onChange={e => setPer({ ...perinfo, style: e.target.value})}
+                required
               >
-                <option value="专题研究报告">专题研究报告</option>
-                <option value="个人工作总结">个人工作总结</option>
-                <option value="讲话稿">讲话稿</option>
                 <option value="新闻推送">新闻推送</option>
-                <option value="行动计划">行动计划</option>
-                {/* <option value="Third Person Singular">政策文件</option> */}
-                {/* <option value="Third Person Singular"></option> */}
+                <option value="个人工作总结">个人工作总结</option>
+                <option value="主题研究报告">主题研究报告</option>
+                <option value="讲话稿">讲话稿</option>
+                <option value="其他">其他</option>
               </select>
             </div>
             <div className="fields half">
@@ -79,6 +78,7 @@ const Brief = () => {
               <select
                 ref={refLength}
                 onChange={e => setPer({ ...perinfo, length: e.target.value})}
+                required
               >
                 <option value="500">500字</option>
                 <option value="1000">1000字</option>
@@ -86,6 +86,7 @@ const Brief = () => {
                 <option value="3000">3000字</option>
                 <option value="4000">4000字</option>
                 <option value="5000">5000字</option>
+                <option value="大于5000">更多</option>
               </select>
             </div>          
           {/* </div>   */}

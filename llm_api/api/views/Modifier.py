@@ -1,6 +1,7 @@
 # import os
 # from django.conf import settings
 # from postdata.models import UploadedFile
+from django.conf import settings
 import logging
 from llama_index.llms.openai import OpenAI
 from dotenv import load_dotenv
@@ -9,25 +10,27 @@ import os
 from llama_index.core.llms import ChatMessage
 
 class Modifier:
-    def __init__(self):
-        load_dotenv(override=True)
-        self.llm = OpenAI(model="gpt-3.5-turbo", temperature=0, max_tokens=2000, api_key=os.getenv('OPENAI_API_KEY'))
-    
+    def __init__(self, user):
+        # persist_dir = os.path.join(settings.MEDIA_ROOT, f"user_{user.id}", 'indexed_files')    
+        # self.use_reference = self.check_whether_reference(user)
+        # if self.use_reference:
+        #     self.index, self.extra_info_dict = self.get_index(user, persist_dir)
+        pass
+
     def modify(self, request_data):
-        logging.info(f"selected text: {request_data['originalText']}")
-        logging.info(f"user prompt: {request_data['userInput']}")
+        # logging.info(f"selected text: {request_data['originalText']}")
+        # logging.info(f"user prompt: {request_data['userInput']}")
         logging.info("writting start!")
-        print(request_data)
-        modified_text = self.modify_text(request_data['style'], request_data['primaryKeyword'], request_data['userInput'], request_data['originalText'])
+        modified_text = self.modify_text(request_data['style'], request_data['userInput'], request_data['originalText'])
         logging.info("writting done!")
         return modified_text
 
-    def modify_text(self, niche, keyword, user_prompt, original_text):
+    def modify_text(self, niche, user_prompt, original_text):
         template = ("你是一名资深内容编辑，现在需要你根据用户的要求修改一篇文章中的一段话。"
-                    "你需要直接返回修改后的文字。文章中不得暴露这是人工智能生成的内容。不要添加如“引言”、“结论”等标签。文字使用中文。"
-                    "你将获得关于全文的描述（风格、关键词）以及用户关于如何修改这段话的要求。"
+                    "你需要直接返回修改后的文字。文章中不得暴露这是人工智能生成的内容。文字使用中文。"
+                    "你将获得关于全文的类型以及用户关于如何修改这段话的要求。"
                     "根据这些信息撰写段落。")
-        human_template = f"领域: {niche}, 关键词: {keyword}, 要求: {user_prompt}, 原文: {original_text}"
+        human_template = f"领域: {niche}, 要求: {user_prompt}, 原文: {original_text}"
         return self.call_gpt(template,
                                     human_template,
                                     )
@@ -40,7 +43,9 @@ class Modifier:
             ), 
             ChatMessage(role="user", content=human_template),
         ]
-        response =self.llm.chat(messages)
+        load_dotenv(override=True)
+        llm = OpenAI(model="gpt-4o", temperature=0, max_tokens=3000, api_key=os.getenv('OPENAI_API_KEY'))
+        response =llm.chat(messages)
         modified_text =response.message.content
         return modified_text
 

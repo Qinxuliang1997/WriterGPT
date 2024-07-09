@@ -48,7 +48,7 @@ function Article() {
                     { insert: section.title, attributes: { bold: true } },
                     { insert: '\n' },
                     ...Object.values(section.paragraphs).flatMap(paragraph => [
-                        { insert: '  ' + paragraph.content },
+                        { insert: '        ' + paragraph.content },
                         { insert: '\n' }
                     ])
                 ])
@@ -124,11 +124,11 @@ function Article() {
                 </span> */}
 
                 {/* <!-- Lists --> */}
-                <span className="ql-formats">
+                {/* <span className="ql-formats">
                     <button className="ql-list" value="ordered"></button>
                     <button className="ql-list" value="bullet"></button>
                     <button className="ql-list" value="check"></button>
-                </span>
+                </span> */}
 
                 {/* <!-- Indentation --> */}
                 {/* <span className="ql-formats">
@@ -137,7 +137,7 @@ function Article() {
                 </span> */}
 
                 {/* <!-- Headers --> */}
-                <span className="ql-formats">
+                {/* <span className="ql-formats">
                     <select className="ql-header">
                         <option value="1"></option>
                         <option value="2"></option>
@@ -147,7 +147,7 @@ function Article() {
                         <option value="6"></option>
                         <option selected></option>
                     </select>
-                </span>
+                </span> */}
 
                 {/* <!-- Text Color and Background --> */}
                 <span className="ql-formats">
@@ -156,15 +156,15 @@ function Article() {
                 </span>
 
                 {/* <!-- Font and Alignment --> */}
-                {/* <span className="ql-formats">
-                    <select className="ql-font"></select>
+                <span className="ql-formats">
                     <select className="ql-align"></select>
-                </span> */}
+                    <select className="ql-font"></select>
+                </span>
 
                 {/* <!-- Clean Formatting --> */}
-                <span className="ql-formats">
+                {/* <span className="ql-formats">
                     <button className="ql-clean"></button>
-                </span>
+                </span> */}
             </div>
 
             <div className="container">
@@ -186,7 +186,7 @@ function Article() {
                     }}
                     onClick={handleMenuClick}
                 >
-                    润色
+                    AI润色
                 </button>
             )}
             {showPopover && (

@@ -31,7 +31,7 @@ export const Register = () => {
                         <label>用户名</label>
                         <input
                             className="form-control mt-1"
-                            placeholder="输入用户名"
+                            // placeholder="输入用户名"
                             name='username'
                             type='text'
                             value={username}
@@ -45,7 +45,7 @@ export const Register = () => {
                             name='password'
                             type="password"
                             className="form-control mt-1"
-                            placeholder="输入密码"
+                            // placeholder="输入密码"
                             value={password}
                             required
                             onChange={e => setPassword(e.target.value)}

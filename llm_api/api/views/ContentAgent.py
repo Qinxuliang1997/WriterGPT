@@ -46,6 +46,45 @@ class ContentAgent:
             section_index += 1
         return sections_dict
 
+    def run_section(self,title, content_requirement, niche, outline):
+        sections_dict = {}
+        section_index = 1
+        complete_article = ""
+        for section_key, section in outline.items():
+            chinese_index = self.number_to_chinese(section_index)
+            updated_title = f"{chinese_index}、{section['title']}"
+            section_length = section['length']
+            paragraphs = []
+            for paragraph_key, paragraph in section['paragraphs'].items():
+                paragraphs.append(paragraph['content'])
+            section_content = self.write_section(
+                title = title,
+                niche=niche,
+                content_requirement=content_requirement,
+                section_title=section['title'],
+                complete_article=complete_article,
+                length = section_length,
+                paragraphs = '、'.join(paragraphs)
+                )
+            complete_article += section_content + '\n'
+
+            section_dict = {}
+            paragraph_index = 1
+            for paragraph in list(section_content.split('\n')):
+                if len(paragraph) == 0:
+                    continue
+                section_dict[f"段落 {paragraph_index}"] = {
+                    "content": paragraph,
+                    "word_count": len(paragraph)
+                }
+                paragraph_index += 1
+            sections_dict[f"小节 {section_index}"] = {
+                "title": updated_title,
+                "paragraphs": section_dict
+            }
+            section_index += 1
+        return sections_dict    
+
     def run_reference(self, index, content_requirement, niche, outline):
         sections_dict = {}
         section_index = 1
@@ -77,7 +116,7 @@ class ContentAgent:
             section_index += 1
         return sections_dict
 
-    def run_reference_section(self, index, content_requirement, niche, outline):
+    def run_reference_section(self, index, title, content_requirement, niche, outline):
         sections_dict = {}
         section_index = 1
         complete_article = ""
@@ -85,15 +124,15 @@ class ContentAgent:
             chinese_index = self.number_to_chinese(section_index)
             updated_title = f"{chinese_index}、{section['title']}"
             section_length = section['length']
-            section_content = self.write_section(
+            section_content = self.write_section_reference(
                 niche=niche,
+                title = title,
                 content_requirement=content_requirement,
-                title=section['title'],
+                section_title=section['title'],
                 index=index,
                 complete_article=complete_article,
                 length = section_length)
-            complete_article += section_content + '\n'
-
+            complete_article += section_content.replace("\n", "")
             section_dict = {}
             paragraph_index = 1
             for paragraph in list(section_content.split('\n')):
@@ -136,19 +175,80 @@ class ContentAgent:
         human_template = f"已写内容: {complete_article}, 参考资料: {' '.join(paragraph_context)}"
         paragraph_content = self.call_llm(template, human_template)
         return paragraph_content
-    
-    def write_section(self, niche, content_requirement, title, index,  complete_article, length):
-        template = ("你是一名资深内容撰稿人，现在需要你根据小节标题完成一篇文章中的一个小节。"
-                    "文章中不得暴露这是人工智能生成的内容。不要添加除内容外的任何描述。不要添加如“引言”、“结论”等标签。使用中文。"
-                    "小节必须非常专业且富有情感。你将获得文章的类型，这个小节的标题，已经完成的部分，参考资料，以及这个小节的长度。"
-                    "根据这些信息撰写小节。")
+
+    def write_section(self, title, niche, content_requirement, section_title, complete_article, length, paragraphs):
+        template = (
+            "你是一名资深内容撰稿人，现在需要你根据以下信息撰写一篇文章中的一个小节。"
+            "1. 文章不得暴露这是人工智能生成的内容。"
+            "2. 直接返回小节内每个段落的内容，不要返回小节标题、段落描述等其他任何信息"
+            "3. 使用中文撰写。"
+            "4. 小节必须非常专业且富有情感。"
+            "你将获得以下信息：文章的类型、文章标题、已完成的部分、小节标题、小节内每个段落的描述以及该小节的预期长度。"
+            "根据这些信息撰写小节。"
+        )
+        human_template = ''
+        if niche != '其他':
+            human_template += f"文章类型: {niche}\n"
+        if title:
+            human_template += f"文章标题: {title}\n"
+        if complete_article:
+            human_template += f"已写内容: {complete_article}\n"
+        if section_title:
+            human_template += f"小节标题: {section_title}\n"
+        if paragraphs:
+            human_template += f"小节内每个段落的描述: {paragraphs}\n"
+        if paragraphs:
+            human_template += f"小节预期长度: {length}\n"
+        return self.call_llm(template, human_template)
+
+    def write_section_v1(self, title, niche, content_requirement, section_title, complete_article, length, paragraphs):
+        template = "假如你是一名资深作家"
+        if title:
+            template += f"，请你根据以下要求和要求撰写标题为{title}的文章中的一个小节"
+        if content_requirement:
+            template += f"， 该文章的关键词包括{content_requirement}"
+        if niche != "其他":
+            template += f",要求撰写的内容符合{niche}的写作风格"
+        template += ("对表述上的要求包括："
+            "1. 文章不得暴露这是人工智能生成的内容；"
+            "2. 直接返回小节内每个段落的内容，此外不要添加其他任何东西；"
+            "3. 使用中文撰写；"
+            "4. 内容必须非常专业且富有情感。"
+        )
+
+        human_template = "对要撰写的小节的内容上的要求包括："
+        if complete_article:
+            human_template += f"该小节前面的内容为{complete_article}，注意与前面的内容表述可以呼应但上不要重复"
+        if section_title:
+            human_template += f"，要撰写的小节的标题为{section_title}"
+        if paragraphs:
+            human_template += f"，要撰写的小节每个段落内容依次为{paragraphs}"
+        if length:
+            human_template += f"，要撰写的小节的长度为{length}"
+        return self.call_llm(template, human_template)
+
+    def write_section_reference(self, niche, title, content_requirement, section_title, index,  complete_article, length):
+        template = (
+            "你是一名资深内容撰稿人，现在需要你根据以下信息撰写一篇文章中的一个小节。"
+            "1. 文章不得暴露这是人工智能生成的内容。"
+            "2. 直接返回小节内每个段落的内容，不要返回小节标题、段落描述等其他任何信息"
+            "3. 使用中文撰写。"
+            "4. 小节必须非常专业且富有情感。"
+            "你将获得以下信息：文章的类型、文章标题、已完成的部分、参考资料、小节标题、小节内每个段落的描述以及该小节的预期长度。"
+            "根据这些信息撰写小节。"
+        )
+        # template = ("你是一名资深内容撰稿人，现在需要你根据小节标题完成一篇文章中的一个小节。"
+        #             "文章中不得暴露这是人工智能生成的内容。不要添加除内容外的任何描述。不要添加如“引言”、“结论”等标签。使用中文。"
+        #             "小节必须非常专业且富有情感。你将获得文章的类型，这个小节的标题，已经完成的部分，参考资料，以及这个小节的长度。"
+        #             "根据这些信息撰写小节。")
         retriever = index.as_retriever(similarity_top_k=3)
         nodes = retriever.retrieve(title)
         paragraph_context = [node.node.text.replace("\n", "") for node in nodes]
         human_template = (f"文章类型: {niche}"
+                          f"文章标题: {title}"
                           f"已写内容: {complete_article}"
                           f"参考资料: {' '.join(paragraph_context)}"
-                          f"小节标题: {title}"
+                          f"小节标题: {section_title}"
                           f"长度: {length}")
         return self.call_llm(template, human_template)
 
