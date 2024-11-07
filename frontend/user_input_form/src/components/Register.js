@@ -5,6 +5,7 @@ import {useState} from "react";
 export const Register = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
     const submit = async e => {
         e.preventDefault();
@@ -13,13 +14,22 @@ export const Register = () => {
             username: username,
             password: password
           };
+        
+        try {
+        // localhost:8000
+            const {data} = await axios.post('http://106.14.184.241/register/', user ,{headers: {
+                'Content-Type': 'application/json'
+            }}, {withCredentials: true});
 
-        const {data} = await axios.post('http://localhost:8000/register/', user ,{headers: {
-            'Content-Type': 'application/json'
-        }}, {withCredentials: true});
-
-        console.log(data)
-        window.location.href = '/login/'
+            console.log(data)
+            window.location.href = '/login'
+        } catch (error) {
+            if (error.response && error.response.status === 401) {
+                setError('注册失败，请稍候再试');
+            } else {
+                setError('注册失败，请稍后再试');
+            }
+        }
     }
 
     return(
@@ -27,6 +37,7 @@ export const Register = () => {
             <form className="Auth-form" onSubmit={submit}>
                 <div className="Auth-form-content">
                     <h3 className="Auth-form-title">注册</h3>
+                    {error && <div className="alert alert-danger" role="alert">{error}</div>}
                     <div className="form-group mt-3">
                         <label>用户名</label>
                         <input

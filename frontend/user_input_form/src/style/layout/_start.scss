@@ -1,0 +1,107 @@
+.start-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 2 columns for the 2x2 grid */
+  // grid-gap: 30px; /* Adds space between the cards */
+  justify-items: center; /* Centers the cards horizontally */
+  align-items: center; /* Centers the cards vertically */
+  padding: 40px; /* Adds some padding around the container */
+  height: calc(100vh - 60px); /* Full viewport height */
+  background-color: #ffffff; /* Light background color for better contrast */
+
+  // Make the grid responsive using custom mixins
+  @include respond(tab-land) {
+    grid-template-columns: repeat(2, 1fr); // 2 cards per row on tablet landscape
+    padding: 30px;
+  }
+  @include respond(tab-port) {
+    grid-template-columns: 1fr; // 1 card per row on tablet portrait
+    padding: 20px;
+  }
+  @include respond(phone) {
+    grid-template-columns: 1fr; // 1 card per row on phones
+    padding: 10px;
+    grid-gap: 20px;
+  }
+
+  .card {
+    width: 400px;
+    height: 600px;
+    background-color: #ffffffbc;
+    color: #000000;
+    border-radius: 15px;
+    margin: 0 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    font-size: 30px;
+    font-style: Roboto;
+    // background-size: cover; 
+    background-position: center;
+    background-repeat: no-repeat;
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+    // Responsive card adjustments
+    @include respond(tab-land) {
+      width: 300px; // Adjust width on tablet landscape
+      height: 450px;
+    }
+    @include respond(tab-port) {
+      width: 80%; // Make cards wider on tablet portrait
+      height: 280px;
+    }
+    @include respond(phone) {
+      width: 80%; // Almost full width on phones
+      height: 200px;
+      font-size: 24px; // Adjust font size for better readability
+    }
+  }
+  .card-newtext {
+    background-image:linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url('/public/file-search.svg');
+    background-size: 100%;
+    @include respond(tab-land) {
+      background-size: 80%;
+    }
+    @include respond(tab-port) {
+      background-size: 50%;
+    }
+    @include respond(phone) {
+      background-size: 50%;
+    }
+  }
+
+  .card-fileupload {
+    background-image:linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url('/public/file-redo.svg');
+    background-size: 100%;
+    @include respond(tab-land) {
+      background-size: 80%;
+    }
+    @include respond(tab-port) {
+      background-size: 50%;
+    }
+    @include respond(phone) {
+      background-size: 50%;
+    }
+  }
+
+  .card-generate {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url('/public/file-check.svg');
+    background-size: 100%;
+    @include respond(tab-land) {
+      background-size: 80%;
+    }
+    @include respond(tab-port) {
+      background-size: 50%;
+    }
+    @include respond(phone) {
+      background-size: 50%;
+    }
+  }
+}

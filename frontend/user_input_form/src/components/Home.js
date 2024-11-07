@@ -101,7 +101,7 @@ class Portfolio extends React.Component {
                         <h1 className="hero-title load-hidden">
                             嗨！欢迎来到 <span className="text-color-main">万卷公文</span>
                             <br />
-                            AI速成公文，基于素材定制，告别空无一物
+                            从素材到成文，公文写作一气呵成!
                         </h1>
                         <p className="hero-cta load-hidden">
                             <a className="cta-btn cta-btn--hero" href="#about">了解更多</a>
@@ -115,7 +115,7 @@ class Portfolio extends React.Component {
                             <div className="col-md-6 col-sm-12">
                                 <div className="about-wrapper__info load-hidden">
                                     <p className="about-wrapper__info-text">
-                                        万卷公文是一个方便快捷的在线文字材料处理平台，超强AI能力支撑，直击公文写作痛点！
+                                        万卷公文是一个方便快捷的在线公文写作平台，超强AI能力支撑，直击公文写作痛点！
                                     </p>
                                     <span className="d-flex mt-3">
                                         <a className="cta-btn cta-btn--resume" href="/login">
@@ -129,7 +129,7 @@ class Portfolio extends React.Component {
                 </section>
                 <section id="projects">
                     <div className="container">
-                        <h2 className="section-title dark-blue-text">核心能力</h2>
+                        <h2 className="section-title dark-blue-text">特色亮点</h2>
                         <div className="project-wrapper">
                             <div className="row">
                                 <div className="col-lg-4 col-sm-12">
@@ -160,13 +160,13 @@ class Portfolio extends React.Component {
                                 <div className="col-lg-4 col-sm-12">
                                     <div className="project-wrapper__text load-hidden">
                                         <h3 className="project-wrapper__text-title">告别假大空</h3>
-                                        <p>根据素材定制公文，拒绝空洞</p>
+                                        <p>根据素材深度定制公文，更懂你的需求</p>
                                     </div>
                                 </div>
                                 <div className="col-lg-4 col-sm-12">
                                     <div className="project-wrapper__text load-hidden">
                                         <h3 className="project-wrapper__text-title">好公文是改出来的</h3>
-                                        <p>句子级AI改写，轻松掌控全文细节</p>
+                                        <p>选择句子进行AI润色，轻松掌控每一个细节</p>
                                     </div>
                                 </div>
                             </div>
@@ -189,8 +189,8 @@ class Portfolio extends React.Component {
                         </a>
                         <hr />
                         <p className="footer__text">
-                            © 2024 - Developed by 
-                            <a href="https://qinxuliang1997.github.io" target="_blank"> XL Q</a>
+                            © 2024 - Developed by 🚶
+                            <a href="https://qinxuliang1997.github.io" target="_blank">HelloBear</a>🚶
                         </p>
                     </div>
                 </footer>

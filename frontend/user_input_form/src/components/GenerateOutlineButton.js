@@ -20,7 +20,8 @@ const GenerateOutlineButton = () => {
 
     try {
       // Use axios for the POST request
-      const response = await axios.post('http://127.0.0.1:8000/api/outline/', description, {
+      // 127.0.0.1:8000
+      const response = await axios.post('http://106.14.184.241/api/outline/', description, {
         headers: {
           'Content-Type': 'application/json',
         }

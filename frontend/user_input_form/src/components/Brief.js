@@ -7,55 +7,60 @@ const Brief = () => {
   const dispatch = useDispatch();
   const description = useSelector(e => e.description.value);
   const [perinfo, setPer] = useState({
-    title: "",
+    // title: "",
     content_requirement: "",
-    // primaryKeyword: "",
+    primaryKeyword: "",
     // secondaryKeywords: "",
     // tone: "",
     style: "",
     length: "",
   });
-  const refTitle=useRef();
+  // const refTitle=useRef();
   const refContentRequirement=useRef();
-  // const refPrimaryKeywords=useRef();
+  const refPrimaryKeywords=useRef();
   // const refSecondaryKeywords=useRef();
   // const refTone=useRef();
   const refStyle=useRef();
   const refLength=useRef();
 
   useEffect(()=>{
-    refTitle.current.value=description.title;
+    // refTitle.current.value=description.title;
     refContentRequirement.current.value=description.content_requirement;
-    // refPrimaryKeywords.current.value=description.primaryKeyword;
+    refPrimaryKeywords.current.value=description.primaryKeyword;
     // refSecondaryKeywords.current.value=description.secondaryKeywords;
     // refTone.current.value=description.tone;
     refStyle.current.value=description.style;
     refLength.current.value=description.length;
-    dispatch(info({...description,title:refTitle.current.value,content_requirement:refContentRequirement.current.value,style:refStyle.current.value,length:refLength.current.value}));
+    dispatch(info({...description,content_requirement:refContentRequirement.current.value,primaryKeyword:refPrimaryKeywords.current.value,style:refStyle.current.value,length:refLength.current.value}));
   },[])  
 
   useEffect(() => {
-    dispatch(info({...description,title:refTitle.current.value,content_requirement:refContentRequirement.current.value,style:refStyle.current.value,length:refLength.current.value}));
-  }, [perinfo.title, perinfo.content_requirement, perinfo.primaryKeyword, perinfo.secondaryKeywords, perinfo.style, perinfo.length]);
+    dispatch(info({...description,content_requirement:refContentRequirement.current.value,primaryKeyword:refPrimaryKeywords.current.value,style:refStyle.current.value,length:refLength.current.value}));
+  }, [perinfo.content_requirement, perinfo.primaryKeyword,perinfo.style, perinfo.length]);
 
   return (
     <div className="brief">
       {/* <h2>Article Description</h2> */}
       <form className="form" autoComplete="on">
-      <div className="fields">
-          <label>标题</label>
-          <input
+        <div className="fields">
+          <label>文章要求</label>
+          {/* <input
             type="textarea" ref={refTitle} autoComplete="on" required
             // placeholder="e.g. 新能源汽车的发展现状与未来展望"
             onChange={e => setPer({ ...perinfo, title: e.target.value})}
+          /> */}
+          <textarea
+            ref={refContentRequirement} autoComplete="on" required
+            // placeholder="e.g. 新能源汽车的发展现状与未来展望"
+            onChange={e => setPer({ ...perinfo, content_requirement: e.target.value})}
           />
         </div>
         <div className="fields">
           <label>关键词</label>
           <input
-            type="textarea" ref={refContentRequirement} autoComplete="on" required
+            type="textarea" ref={refPrimaryKeywords} autoComplete="on" required
             // placeholder="e.g. 新能源汽车产业发展情况汇报"
-            onChange={e => setPer({ ...perinfo, content_requirement: e.target.value})}
+            onChange={e => setPer({ ...perinfo, primaryKeyword: e.target.value})}
           />
         </div>      
         {/* <div className="fields-row"> */}
@@ -67,8 +72,8 @@ const Brief = () => {
                 required
               >
                 <option value="新闻推送">新闻推送</option>
-                <option value="个人工作总结">个人工作总结</option>
-                <option value="主题研究报告">主题研究报告</option>
+                <option value="工作总结">工作总结</option>
+                <option value="主题报告">主题报告</option>
                 <option value="讲话稿">讲话稿</option>
                 <option value="其他">其他</option>
               </select>

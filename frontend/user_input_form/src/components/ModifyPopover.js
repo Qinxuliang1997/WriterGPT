@@ -13,7 +13,8 @@ const ModifyPopover = React.forwardRef(({ selectedText, onSubmit, onClose, style
 
     const handleSubmit = () => {
         setIsLoading(true);
-        axios.post('http://127.0.0.1:8000/api/modify/', Object.assign({
+        // 127.0.0.1:8000
+        axios.post('http://106.14.184.241/api/modify/', Object.assign({
             originalText: selectedText,
             userInput: inputText,
             }, description),

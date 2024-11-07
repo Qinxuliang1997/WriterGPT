@@ -1,43 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
   <head>
-    <meta charset="utf-8" />
+    <!-- Character set and language -->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Page title and favicon -->
+    <title>万卷公文 - 更懂你的AI写作助手</title>
     <link rel="icon" href="%PUBLIC_URL%/logo.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo.svg" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>万卷公文</title>
+    <!-- Theme and SEO meta tags -->
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="万卷公文是一款专为公文写作设计的AI辅助工具，提供专业的写作建议、范文参考和材料整合，助力高效写作。" />
+    <meta name="keywords" content="公文写作, 材料写作, AI写作, 人工智能, 写作工具, 公文生成, 文案, 范文参考" />
+
+    <!-- Social Media Open Graph tags for enhanced link sharing -->
+    <meta property="og:title" content="万卷公文 - 专业的AI公文写作助手" />
+    <meta property="og:description" content="使用万卷公文进行更高效、专业的公文写作。AI赋能，快速生成范文参考和写作建议。" />
+    <meta property="og:image" content="%PUBLIC_URL%/logo.svg" />
+    <meta property="og:url" content="https://yourwebsite.com" />
+    <meta property="og:type" content="website" />
+
+    <!-- Manifest for PWA support -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+    <!-- Canonical link to specify the preferred URL for SEO -->
+    <link rel="canonical" href="https://yourwebsite.com" />
+
+    <!-- Structured Data for Search Engines (JSON-LD format) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "万卷公文",
+      "url": "https://yourwebsite.com",
+      "description": "万卷公文是一款专业的AI公文写作工具，提供素材定制、步骤写作和细节润色校对功能。",
+      "applicationCategory": "ProductivityApplication",
+      "operatingSystem": "Web",
+      "image": "%PUBLIC_URL%/logo.svg",
+      "keywords": ["公文写作", "AI写作", "材料写作", "公文生成", "写作助手", "素材定制"]
+    }
+    </script>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <noscript>需要启用JavaScript才能运行此应用。</noscript>
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
   </body>
 </html>

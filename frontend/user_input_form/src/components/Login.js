@@ -15,7 +15,8 @@ export const Login = () => {
         };
 
         try {
-            const { data } = await axios.post('http://localhost:8000/token/', user, {
+            // localhost:8000
+            const { data } = await axios.post('http://106.14.184.241/token/', user, {
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -27,7 +28,7 @@ export const Login = () => {
             localStorage.setItem('refresh_token', data.refresh);
             localStorage.setItem('user_name', username);
             axios.defaults.headers.common['Authorization'] = `Bearer ${data.access}`;
-            window.location.href = '/preliminary';
+            window.location.href = '/start';
         } catch (error) {
             if (error.response && error.response.status === 401) {
                 setError('用户名或密码错误');

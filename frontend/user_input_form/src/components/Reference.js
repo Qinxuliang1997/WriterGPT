@@ -18,7 +18,8 @@ function Reference() {
         setUploadStatus('Uploading...');
         const formData = new FormData(e.target);
         try {
-            const response = await axios.post('http://localhost:8000/postdata/upload/', formData);
+            // localhost:8000
+            const response = await axios.post('http://106.14.184.241/postdata/upload/', formData);
             if (response.status === 201) {  // 假设状态码 200 表示上传成功
                 setUploadStatus('Upload successful!');
                 fetchUploadedFiles();
@@ -38,7 +39,8 @@ function Reference() {
 
     const handleDeleteAllFiles = async () => {
         try {
-            await axios.delete('http://localhost:8000/postdata/upload/');
+            // localhost:8000
+            await axios.delete('http://106.14.184.241/postdata/upload/');
             setUploadedFiles([]);
             alert('参考资料已清空！');
         } catch (error) {
@@ -48,7 +50,8 @@ function Reference() {
 
     const fetchUploadedFiles = async () => {
         try {
-            const response = await axios.get('http://localhost:8000/postdata/upload/');
+            // localhost:8000
+            const response = await axios.get('http://106.14.184.241/postdata/upload/');
             setUploadedFiles(response.data.uploaded_files);
         } catch (error) {
             console.error('Error:', error);
@@ -77,7 +80,7 @@ function Reference() {
                         type="file" 
                         id="single_file" 
                         name="single_file" 
-                        accept=".pdf, .txt, .docx" 
+                        accept=".pdf, .txt, .docx, .doc" 
                     />
                 </div>
                 <div className="fields">

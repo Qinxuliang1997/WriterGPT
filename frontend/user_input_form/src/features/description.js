@@ -5,13 +5,13 @@ export const descriptionSlice = createSlice({
   initialState: {
     value: {
       // topic: "",
-      // primaryKeyword: "",
       // secondaryKeywords: "",
       // tone: "",
       // view: "",
       // nextClick: false,
-      title: "", 
+      // title: "", 
       content_requirement: "",
+      primaryKeyword: "",
       outline: {},
       length: "",
       style: "",

@@ -1,19 +1,93 @@
 //////////// Article
 .article-writer {
-    background-color: rgb(250, 250, 250); /* 灰色背景 */
+    background-color: #F6F8FA; /* 灰色背景 */
     // padding: 20px; /* 这个 padding 会成为灰色的 margin 区域 */
     // width: calc(50% + 40px); /* container宽度 + padding */
     // margin: auto; /* 居中 outer-container */
-    .ql-toolbar.ql-snow{
+    .custom-toolbar {
       display: flex;
-      justify-content: center; // 水平居中
-      align-items: center;     // 垂直居中（如果需要）
-      height: 100%;            // 父容器的高度，确保有足够的空间进行垂直居中   
-      border: 1px solid #e6e6e6;
-      // @include respond(phone) {
-      //   flex-direction: column; // Stack toolbar items on small screens
-      // }       
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ccc;
+      padding: 5px;
+      @include respond(phone) {
+        flex-direction: column; // Stack toolbar items on small screens
+      }    
+      .ql-toolbar.ql-snow{
+        display: flex;
+        justify-content: center; // 水平居中
+        align-items: center;     // 垂直居中（如果需要）
+        height: 100%;            // 父容器的高度，确保有足够的空间进行垂直居中   
+        border: None;
+      .ql-formats {
+        margin-right: 0;
+        // .ql-picker-label {
+        //   padding: 0px 0px;
+        // }
+        .ql-align.ql-picker.ql-icon-picker {
+          font-size : 0px;
+        }
+        .ql-background.ql-picker.ql-color-picker {
+          font-size: 0;
+        }
+        .ql-color.ql-picker.ql-color-picker {
+          font-size: 0;
+        }
+      }
+      .divider {
+          border-left: 1px solid #ccc;
+          height: 20px;
+          margin: 0 8px;
+          display: inline-block;
+          vertical-align: middle;
+        }
+      .ql-undo, .ql-redo {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0px;
+        }
+        .svg-icon {
+          width: 20px;
+          height: 20px;
+          transition: filter 0.3s ease;
+          filter:  brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(0%) contrast(100%); /* 初始颜色 (黑色) */
+        }
+        button:hover .svg-icon {
+          filter: brightness(0) saturate(100%) invert(41%) sepia(93%) saturate(2654%) hue-rotate(189deg) brightness(93%) contrast(102%); /* 悬停时恢复原色 */
+        }
+      }   
+      .toolbar-right {
+        display: flex;
+        align-items: center;
+        #word-count {
+          margin-right: 10px;
+          font-size: 14px;
+          color: #555;
+        }
+        button {
+          background-color: #f5f5f5; /* 背景色与图中类似 */
+          border: 1px solid #ccc;   /* 边框颜色 */
+          border-radius: 4px;       /* 圆角 */
+          padding: 6px 12px;        /* 内边距 */
+          margin-left: 10px;        /* 左边间距 */
+          font-size: 14px;          /* 字体大小 */
+          cursor: pointer;          /* 鼠标悬停效果 */
+          color: #333;              /* 字体颜色 */
+          outline: none;            /* 去掉默认的点击边框 */
+        }
+        button:hover {
+            background-color: #e6e6e6; /* 鼠标悬停时背景颜色变化 */
+        }
+        button:active {
+            background-color: #dcdcdc; /* 点击时背景颜色变化 */
+        }
+        button:focus {
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* 聚焦时的蓝色阴影 */
+        }
+      }   
     }
+
     .container {
       // Adjust the padding and margins as needed
       padding: 20px;
@@ -22,11 +96,9 @@
       @include respond(phone) {
         width: 95%; // Full width on smaller screens
       }
-
       @include respond(tab-port) {
         width: 90%; // Slightly smaller width on tablets in portrait
       }
-
       @include respond(big-desktop) {
         width: 85%; // Suitable for landscape tablets
       }
@@ -46,12 +118,23 @@
           // min-height: 800px; // Minimum height for the editor
           .editor.ql-container { 
             // Styles for the Quill editor
-            height: 90vh;
+            height: 80vh;
             font-size: 25px; 
             line-height: 3;
             font-family: "SimSun", sans-serif;
+            color: #3D5272FC;
             .ql-editor{
               padding: 80px 50px 23px 50px;
+              line-height: 2
+              p {
+                margin-top: 1rem;
+              }
+              h3 {
+                margin-top: 0;
+              }
+              h4 {
+                margin-top: 1.5rem;
+              }
             }
             // .ql-toolbar {
             //   border-bottom: 1px solid #e2e2e2; // Border color for the toolbar
@@ -72,11 +155,78 @@
     }
 }
 
+// .modify-menu {
+//     position: fixed;
+//     background-color: white;
+//     border: 1px solid #ccc;
+//     padding: 5px;
+//     z-index: 1000;
+//     cursor: pointer;
+// }
+
 .modify-menu {
-    position: fixed;
-    background-color: white;
-    border: 1px solid #ccc;
-    padding: 5px;
-    z-index: 1000;
-    cursor: pointer;
+  position: fixed;
+  width: 50px;               // 设置合适的宽度
+  height: 40px;              // 设置合适的高度
+  background-color: rgba(255, 255, 255, 0);
+  // border: 1px solid #ccc;
+  border:0;
+  z-index: 1000;
+  cursor: pointer;
+  background-image: url('/public/idea.svg'); // 引入 SVG 文件
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
 }
+
+// Add styles for proofreading
+.ql-container .ql-editor .ql-proofread {
+    position: relative;
+    background-color: #ffcccb; // Light red background for changes
+    &:hover::after {
+        content: attr(data-proofread);
+        position: absolute;
+        left: 0;
+        top: 100%;
+        white-space: nowrap;
+        background-color: #000;
+        color: #fff;
+        padding: 5px;
+        border-radius: 4px;
+        z-index: 2000;
+    }
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 20px;
+  z-index: 2000;
+}
+.error-message {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ffcccb;
+  color: black;
+  padding: 10px;
+  border-radius: 5px;
+  z-index: 2001;
+}
+
+// .ins {
+//   background-color: red; /* 背景红色 */
+// }
+
+// .deleted {
+//   text-decoration: line-through; /* 删除线 */
+// }

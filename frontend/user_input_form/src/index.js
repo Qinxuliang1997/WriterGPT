@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './style/style.css';
 import 'quill/dist/quill.snow.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'normalize.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
