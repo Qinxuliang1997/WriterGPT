@@ -20,7 +20,7 @@ const GenerateArticleButton = () => {
     try {
       // Use axios for the POST request
       // 127.0.0.1
-      const response = await axios.post('http://106.14.184.241/api/ask/', description, {
+      const response = await axios.post('http://106.14.184.241/api/ask/', {description, manner: 'general_writting' }, {
         headers: {
           'Content-Type': 'application/json',
         },

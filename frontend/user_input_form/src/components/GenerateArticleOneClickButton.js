@@ -32,7 +32,7 @@ const GenerateArticleOneClickButton = () => {
       //     'Content-Type': 'application/json',
       //   },
       // });
-      const response = await apiClient.post('http://106.14.184.241/api/ask/', description, {
+      const response = await apiClient.post('http://106.14.184.241/api/ask/',  {description, manner: 'oneclick_writting' }, {
         headers: {
           'Content-Type': 'application/json',
         },
