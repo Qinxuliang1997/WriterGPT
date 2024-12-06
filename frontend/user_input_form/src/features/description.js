@@ -4,7 +4,7 @@ export const descriptionSlice = createSlice({
   name: "description",
   initialState: {
     value: {
-      // tone: "",
+      tone: "",
       // view: "",
       // nextClick: false,
       // title: "", 

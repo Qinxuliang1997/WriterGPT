@@ -129,6 +129,28 @@
     color: white;
     border-radius: 10px;
   }
+  .btn3 {
+    position: relative;
+    overflow: hidden;
+    background-color: #41638d;
+    border: none;
+    color: white;
+    border-radius: 10px;
+    .progress-bar {
+      position: absolute;
+      background-color: #174a89;
+      height: 100%;
+      width: 0%;
+      bottom: 0;
+      left: 0;
+      transition: width 0.05s linear;
+      z-index: 0;
+    }
+    span {
+      position: relative;
+      z-index: 1;
+    }
+  }
 }
 .btnRight{
   justify-content: right !important;

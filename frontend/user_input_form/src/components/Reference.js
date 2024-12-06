@@ -1,34 +1,87 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { back, next } from '../features/pages';
+import { info } from '../features/description';
+import { useNavigate } from 'react-router-dom';
+import apiClient, { setupAxiosInterceptors } from '../interceptors/axioss';
 
 function Reference() {
     const [uploadStatus, setUploadStatus] = useState('');
     const [uploadedFiles, setUploadedFiles] = useState([]);
-    const  user_name = localStorage.getItem('user_name');
-    const textInputRef = useRef(null);  // 添加一个引用来访问文本输入域
-    const fileInputRef = useRef(null);  // 添加一个引用来访问文件输入域
+    const [isLoading, setIsLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const description = useSelector((e) => e.description.value);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const user_name = localStorage.getItem('user_name');
+    const textInputRef = useRef(null);
+    const fileInputRef = useRef(null);
     const urlInputRef = useRef(null);
-    
+    const [progress, setProgress] = useState(0);
+
     useEffect(() => {
         fetchUploadedFiles();
     }, []);
+
+    useEffect(() => {
+        setupAxiosInterceptors(navigate, (message) => {
+          setErrorMessage(message);
+        });
+      }, [navigate]);
+
+    const GenerateClick = async () => {
+        if (isLoading) return;
+        setIsLoading(true);
+        setProgress(0);
+        setErrorMessage('')
+        const desiredTimeInSeconds = 10; //todo
+        const updatesPerSecond = 10;
+        const step = 100 / (desiredTimeInSeconds * updatesPerSecond); 
+        let interval = setInterval(() => {
+          setProgress(prevProgress => {
+            if (prevProgress >= 100) {
+              clearInterval(interval);
+              return 100;
+            }
+            return prevProgress + step;
+          });
+        }, 1000 / updatesPerSecond);
+        try {
+            const response = await apiClient.post('http://106.14.184.241/api/outline/', {description, manner: 'general_writting' }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            console.log('成功发送：', response.data);
+            const outlineData = {
+                outline: response.data.article.outline,
+            };
+            dispatch(info(outlineData));
+            dispatch(next());
+            setProgress(100); // Ensure progress bar is full
+            clearInterval(interval);
+        } catch (error) {
+            console.error('Error sending data to backend', error);
+            setErrorMessage('出错啦！请稍后再试');
+        } finally {
+            setIsLoading(false);
+            setTimeout(() => setProgress(0), 500); 
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setUploadStatus('Uploading...');
         const formData = new FormData(e.target);
         try {
-            // localhost:8000
             const response = await axios.post('http://106.14.184.241/postdata/upload/', formData);
-            if (response.status === 201) {  // 假设状态码 200 表示上传成功
+            if (response.status === 201) {
                 setUploadStatus('Upload successful!');
                 fetchUploadedFiles();
-                // 上传成功后清空输入内容
-                textInputRef.current.value = "";  // 清空文本输入域
-                fileInputRef.current.value = "";  // 清空文件输入域
-                // urlInputRef.current.value= "";
+                textInputRef.current.value = "";
+                fileInputRef.current.value = "";
             } else {
-                // 处理非 200 响应状态码
                 setUploadStatus('Upload failed, please try again.');
             }
         } catch (error) {
@@ -39,8 +92,7 @@ function Reference() {
 
     const handleDeleteAllFiles = async () => {
         try {
-            // localhost:8000
-            await axios.delete('http://106.14.184.241/postdata/upload/');
+            await apiClient.delete('http://106.14.184.241/postdata/upload/');
             setUploadedFiles([]);
             alert('参考资料已清空！');
         } catch (error) {
@@ -50,7 +102,6 @@ function Reference() {
 
     const fetchUploadedFiles = async () => {
         try {
-            // localhost:8000
             const response = await axios.get('http://106.14.184.241/postdata/upload/');
             setUploadedFiles(response.data.uploaded_files);
         } catch (error) {
@@ -60,8 +111,6 @@ function Reference() {
 
     return (
         <div className="reference">
-            {/* <h2>Reference</h2> */}
-            {/* <h3>You can upload your references here</h3> */}
             <form className="uploadForm" encType="multipart/form-data" onSubmit={handleSubmit}>
                 <div className="fields">
                     <label id="reference_text" htmlFor="text">文本</label>
@@ -108,12 +157,25 @@ function Reference() {
             </form>
             {/* <div id="uploadStatus" className="text-center mt-4">{uploadStatus}</div> */}
             <h3>已上传的文件</h3>
-            <div className="uploadedFilesList">
-                <ul className="list-inside">
-                    {uploadedFiles.map((file, index) => <li key={index}>{file}</li>)}
-                </ul>
+            <div className='uploadedFilesInfo'>
+                <div className="uploadedFilesList">
+                    <ul className="list-inside">
+                        {uploadedFiles.map((file, index) => <li key={index}>{file}</li>)}
+                    </ul>
+                </div>
+                <button onClick={handleDeleteAllFiles}>清空</button>                
             </div>
-            <button onClick={handleDeleteAllFiles}>清空</button>
+
+            <div className={'btnNavigation'}>
+                {errorMessage && <div className="error-message">{errorMessage}</div>}
+                <button className='btn1' onClick={() => dispatch(back())}>上一步</button>
+                <button className='btn3' onClick={GenerateClick} disabled={isLoading}>
+                    {/* {isLoading ? '正在生成目录......' : (uploadedFiles.length === 0 ? '跳过上传，直接生成目录' : '生成目录')} */}
+                    {/* {isLoading ? <div className="progress-bar"></div> : (uploadedFiles.length === 0 ? '跳过上传，直接生成目录' : '生成目录')} */}
+                    <div className="progress-bar" style={{ width: `${progress}%` }}></div>
+                    <span>{isLoading ? '正在生成目录......' : (uploadedFiles.length === 0 ? '跳过上传' : '生成目录')}</span>
+                </button>
+            </div>
         </div>
     );
 }

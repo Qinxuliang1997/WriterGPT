@@ -57,15 +57,15 @@ const Brief = () => {
           <label>使用场合</label>
           <input
             type="textarea" ref={refOccasion} autoComplete="on" required
-            placeholder="例子： 市长在全市青年干部会议中的发言稿"
+            placeholder="市长在全市青年干部会议中的发言稿"
             onChange={e => setPer({ ...perinfo, occasion: e.target.value})}
           />
         </div>
         <div className="fields">
-          <label>主题（选填）</label>
+          <label>内容要求（选填）</label>
           <input
             type="textarea" ref={refTopic} autoComplete="on"
-            placeholder=""
+            placeholder="文章包括三个部分：***，***，***"
             onChange={e => setPer({ ...perinfo, topic: e.target.value })}
           />
         </div>

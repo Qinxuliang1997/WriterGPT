@@ -12084,6 +12084,28 @@ a:hover {
   color: white;
   border-radius: 10px;
 }
+.btnNavigation .btn3 {
+  position: relative;
+  overflow: hidden;
+  background-color: #41638d;
+  border: none;
+  color: white;
+  border-radius: 10px;
+}
+.btnNavigation .btn3 .progress-bar {
+  position: absolute;
+  background-color: #174a89;
+  height: 100%;
+  width: 0%;
+  bottom: 0;
+  left: 0;
+  transition: width 0.05s linear;
+  z-index: 0;
+}
+.btnNavigation .btn3 span {
+  position: relative;
+  z-index: 1;
+}
 
 .btnRight {
   justify-content: right !important;
@@ -12365,6 +12387,9 @@ main {
 .brief .form .fields input::placeholder, .brief .form .fields select::placeholder, .brief .form .fields textarea::placeholder {
   color: hsl(231, 11%, 63%);
 }
+.brief .form .fields textarea {
+  height: 200px;
+}
 .brief .form .fields label {
   color: hsl(213, 96%, 18%);
   font-size: 18px;
@@ -12419,17 +12444,17 @@ main {
 .reference .uploadForm .fields input::placeholder, .reference .uploadForm .fields textarea::placeholder {
   color: hsl(231, 11%, 63%);
 }
-.reference .uploadedFilesList {
-  max-height: 30px;
-  overflow: auto;
-}
-.reference .uploadedFilesList .list-inside {
-  font-size: 16px;
-}
 .reference h3, .reference .h3 {
   margin-top: 20px;
 }
-.reference button {
+.reference .uploadedFilesInfo .uploadedFilesList {
+  max-height: 30px;
+  overflow: auto;
+}
+.reference .uploadedFilesInfo .uploadedFilesList .list-inside {
+  font-size: 16px;
+}
+.reference .uploadedFilesInfo button {
   margin-top: 10px;
   width: 100%;
   height: 40px;

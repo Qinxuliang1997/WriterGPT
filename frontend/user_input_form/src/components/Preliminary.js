@@ -1,12 +1,12 @@
 import Steps from "./Steps";
 import Brief from "./Brief";
-import NavigationButton from "./NavigationButtons"
+// import NavigationButton from "./NavigationButtons"
 import Reference from "./Reference"
 import Title from "./Title"
 import Outline from "./Outline"
 import { useSelector } from "react-redux";
-import GenerateArticleButton from "./GenerateArticleButton";
-import GenerateOutlineButton from "./GenerateOutlineButton";
+// import GenerateArticleButton from "./GenerateArticleButton";
+// import GenerateOutlineButton from "./GenerateOutlineButton";
 
 function Preliminary() {
   
@@ -27,9 +27,9 @@ function Preliminary() {
       <div className="Container">
         <div className="content">
           {PageDisplay()}
-          {page ==0 && <NavigationButton/>} 
-          {page == 1 && <GenerateOutlineButton/>}
-          {page ==2 && <GenerateArticleButton/>}
+          {/* {page ==0 && <NavigationButton/>}  */}
+          {/* {page == 1 && <GenerateOutlineButton/>} */}
+          {/* {page ==2 && <GenerateArticleButton/>} */}
         </div>
       </div>
     </main>
